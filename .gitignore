@@ -1,0 +1,8 @@
+.vscode
+subject
+test
+obj
+*.o
+*.a
+*.out
+mysh

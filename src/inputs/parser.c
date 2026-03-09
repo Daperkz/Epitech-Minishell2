@@ -1,0 +1,34 @@
+/*
+** EPITECH PROJECT, 2026
+** parser.c
+** File description:
+** parser
+*/
+
+#include "my/string.h"
+
+#include "shell.h"
+
+static void strip_endline(char *str)
+{
+    int i = 0;
+
+    if (!str)
+        return;
+    while (str[i])
+        i++;
+    if (i > 0 && str[i - 1] == '\n')
+        str[i - 1] = '\0';
+}
+
+int parse_input(shell_t *shell)
+{
+    strip_endline(shell->input);
+    if (!shell->input[0])
+        return (EXIT_SUCCESS);
+    shell->input_array = my_str_to_word_array(shell->input, BASIC_SEPERATOR);
+    if (!shell->input_array)
+        return (EXIT_FAILURE);
+    shell->input_array_len = my_word_array_len(shell->input_array);
+    return (EXIT_SUCCESS);
+}
