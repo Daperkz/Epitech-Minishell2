@@ -9,7 +9,7 @@ long my_word_array_len(char **word_array)
 {
     long len = 0;
 
-    while (*word_array) {
+    while (word_array && *word_array) {
         len++;
         word_array++;
     }

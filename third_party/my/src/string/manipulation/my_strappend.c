@@ -12,14 +12,17 @@
 
 char *my_strappend(char **dest_ptr, char *src)
 {
-    char *new_dest = malloc(sizeof(char) *
-        (my_strlen((*dest_ptr)) + my_strlen(src) + 1));
+    char *new_dest = NULL;
     char *origin = new_dest;
-    char *parse_dest = *dest_ptr;
 
+    if (!dest_ptr)
+        return (NULL);
+    new_dest = malloc(sizeof(char) *
+        (my_strlen((*dest_ptr)) + my_strlen(src) + 1));
     if (!new_dest)
-        return NULL;
-    my_strcpy(new_dest, parse_dest);
+        return (NULL);
+    origin = new_dest;
+    my_strcpy(new_dest, *dest_ptr);
     free(*dest_ptr);
     my_strcat(new_dest, src);
     (*dest_ptr) = origin;

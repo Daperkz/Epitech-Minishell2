@@ -6,34 +6,32 @@
 */
 
 #include <unistd.h>
-#include "switch_parameters.h"
-#include "flag_to_func.h"
-#include "my_printf_utils.h"
-#include "count_error.h"
 
 #include "my/io.h"
 #include "my/string.h"
 
+#include "internal.h"
+#include "parser.h"
+
 static int internal_printf(int fd, const char *format, va_list args)
 {
-    cot_err_t coterr = {0, 0};
-    int written;
+    pf_ctx_t ctx = {fd, 0, 0};
+    int offset;
 
-    while (*format != '\0') {
-        if (*format == '%') {
-            format++;
-            format_gestion(fd, args, format, &coterr);
+    while (*format) {
+        if (*format != '%') {
+            ctx.error = (my_putchar_fd(fd, *format) == -1) ? 1 : ctx.error;
+            ctx.count++;
             format++;
             continue;
         }
-        written = my_putchar_fd(fd, (*format));
-        if (written == -1)
-            coterr.error = 1;
-        else
-            coterr.count += written;
-        format++;
+        offset = handle_conversion(&ctx, format + 1, args, NULL);
+        if (offset > 0) {
+            format += (offset + 1);
+            continue;
+        }
     }
-    return coterr.error ? -1 : coterr.count;
+    return ctx.error ? -1 : ctx.count;
 }
 
 int my_printf(const char *format, ...)
@@ -58,25 +56,41 @@ int my_fprintf(int fd, const char *format, ...)
     return ret;
 }
 
+static int isnotspecifier(char **str_ptr, pf_ctx_t *ctx, char **format)
+{
+    char tmp[2] = {*(*format), 0};
+
+    if (*(*format) != '%') {
+        if (!my_strappend(str_ptr, tmp))
+            return (-1);
+        (ctx->count)++;
+        (*format)++;
+        return (EXIT_SUCCESS);
+    }
+    return (EXIT_FAILURE);
+}
+
 static int internal_sprintf(char **str_ptr, char *format, va_list args)
 {
-    cot_err_t coterr = {0, 0};
-    char one_char[2];
+    pf_ctx_t ctx = {-1, 0, 0};
+    int offset;
+    int retv;
 
-    one_char[1] = '\0';
-    while ((*format)) {
-        if (*format == '%') {
-            format++;
-            sformat_gestion(str_ptr, args, format, &coterr);
-            format++;
+    while (*format) {
+        retv = isnotspecifier(str_ptr, &ctx, &format);
+        if (retv == -1)
+            return (retv);
+        if (retv == EXIT_SUCCESS)
+            continue;
+        offset = handle_conversion(&ctx, format + 1, args, str_ptr);
+        if (offset > 0) {
+            format += (offset + 1);
             continue;
         }
-        one_char[0] = (*format);
-        my_strappend(str_ptr, one_char);
-        (coterr.count)++;
-        format++;
+        if (offset == -1)
+            return (-1);
     }
-    return coterr.error ? -1 : coterr.count;
+    return (ctx.error ? (-1) : (ctx.count));
 }
 
 int my_sprintf(char **str_ptr, char *format, ...)

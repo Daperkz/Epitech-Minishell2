@@ -9,9 +9,9 @@
 
 #include "my/utils.h"
 
-#include "my_printf_utils.h"
+#include "internal.h"
 
-char *parameter_p(va_list args, cot_err_t *coterr)
+char *parameter_p(va_list args, pf_ctx_t *coterr)
 {
     void *p = va_arg(args, void *);
     char *str = my_put_adress(p);

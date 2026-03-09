@@ -10,7 +10,7 @@
 #include "my/string.h"
 #include "my/utils.h"
 
-#include "my_printf_utils.h"
+#include "internal.h"
 #include "modifiers.h"
 
 /*
@@ -37,19 +37,20 @@ static int modifier_precision_id_c(va_list args, int x, int id)
 }
 */
 
-char *parameter_c(va_list args, cot_err_t *coterr)
+char *parameter_c(va_list args, pf_ctx_t *coterr)
 {
     char c = va_arg(args, int);
-    char *str = malloc(sizeof(char) * 1);
+    char *str = malloc(sizeof(char) * 2);
 
     coterr->count += 0;
     if (!str)
         return NULL;
-    my_strcpy(str, &c);
+    str[0] = c;
+    str[1] = '\0';
     return str;
 }
 
-char *parameter_s(va_list args, cot_err_t *coterr)
+char *parameter_s(va_list args, pf_ctx_t *coterr)
 {
     char *str = va_arg(args, char *);
     char *new_str = NULL;
@@ -69,7 +70,7 @@ char *parameter_s(va_list args, cot_err_t *coterr)
     return new_str;
 }
 
-char *parameter_percent(va_list args, cot_err_t *coterr)
+char *parameter_percent(va_list args, pf_ctx_t *coterr)
 {
     char *str = malloc(sizeof(char) * 2);
 

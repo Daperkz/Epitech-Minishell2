@@ -9,10 +9,9 @@
 
 #include "my/utils.h"
 
-#include "my_printf_utils.h"
-#include "flag_to_func.h"
+#include "internal.h"
 
-char *parameter_o(va_list args, cot_err_t *coterr)
+char *parameter_o(va_list args, pf_ctx_t *coterr)
 {
     unsigned int nb = va_arg(args, unsigned int);
     char *str = my_uitoab(nb, "01234567");

@@ -17,15 +17,17 @@ int my_show_word_array(char **tab)
     int count = 0;
     char *str = NULL;
 
+    if (!tab)
+        return (EXIT_FAILURE);
     while (tab[count] != 0) {
         count++;
     }
     if (count == 0 && tab[count] == 0) {
-        return 0;
+        return (EXIT_SUCCESS);
     }
     str = concat_params(count, tab);
     my_strcat(str, "\n");
     my_putstr(str);
     free(str);
-    return 0;
+    return (EXIT_SUCCESS);
 }

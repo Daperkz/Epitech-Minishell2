@@ -16,12 +16,13 @@
     // Calculates the absolute value
     #define ABS(x) ((x) < 0 ? -x : x)
     // Returns the sign of x
-    #define SIGN(x) (x < 0 ? -1 : x == 0 ? 0 : 1)
+    #define SIGN(x) my_sign(x)
     // Returns the smaller of two values
     #define MIN(x, y) (x < y ? x : y)
     // Returns the larger of two values
     #define MAX(x, y) (x > y ? x : y)
 
+int my_sign(int x);
 int my_isneg(int nb);
 int my_compute_power_rec(int nb, int power);
 int my_compute_square_root(int nb);

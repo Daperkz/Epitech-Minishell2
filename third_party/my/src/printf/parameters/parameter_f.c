@@ -9,9 +9,9 @@
 
 #include "my/utils.h"
 
-#include "my_printf_utils.h"
+#include "internal.h"
 
-char *parameter_f(va_list args, cot_err_t *coterr)
+char *parameter_f(va_list args, pf_ctx_t *coterr)
 {
     double nb = va_arg(args, double);
     char *str = my_ftoa(nb, 6);
@@ -22,7 +22,7 @@ char *parameter_f(va_list args, cot_err_t *coterr)
     return str;
 }
 
-char *parameter_ff(va_list args, cot_err_t *coterr)
+char *parameter_ff(va_list args, pf_ctx_t *coterr)
 {
     double nb = va_arg(args, double);
     char *str = my_ftoa(nb, 6);

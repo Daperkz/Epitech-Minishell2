@@ -7,11 +7,11 @@
 
 #include <stdarg.h>
 
-#include "my_printf_utils.h"
+#include "internal.h"
 
 #include "my/utils.h"
 
-char *parameter_d(va_list args, cot_err_t *coterr)
+char *parameter_d(va_list args, pf_ctx_t *coterr)
 {
     int nb = va_arg(args, int);
     char *str = my_itoab(nb, "0123456789");
@@ -22,7 +22,7 @@ char *parameter_d(va_list args, cot_err_t *coterr)
     return str;
 }
 
-char *parameter_u(va_list args, cot_err_t *coterr)
+char *parameter_u(va_list args, pf_ctx_t *coterr)
 {
     unsigned int nb = va_arg(args, unsigned int);
     char *str = my_uitoab(nb, "0123456789");

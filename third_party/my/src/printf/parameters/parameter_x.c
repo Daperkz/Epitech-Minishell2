@@ -9,9 +9,9 @@
 
 #include "my/utils.h"
 
-#include "my_printf_utils.h"
+#include "internal.h"
 
-char *parameter_x(va_list args, cot_err_t *coterr)
+char *parameter_x(va_list args, pf_ctx_t *coterr)
 {
     unsigned int nb = va_arg(args, unsigned int);
     char *str = my_uitoab(nb, "0123456789abcdef");
@@ -22,7 +22,7 @@ char *parameter_x(va_list args, cot_err_t *coterr)
     return str;
 }
 
-char *parameter_xx(va_list args, cot_err_t *coterr)
+char *parameter_xx(va_list args, pf_ctx_t *coterr)
 {
     unsigned int nb = va_arg(args, unsigned int);
     char *str = my_uitoab(nb, "0123456789ABCDEF");

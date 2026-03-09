@@ -9,10 +9,9 @@
 
 #include "my/utils.h"
 
-#include "my_printf_utils.h"
-#include "flag_to_func.h"
+#include "internal.h"
 
-char *parameter_a(va_list args, cot_err_t *coterr)
+char *parameter_a(va_list args, pf_ctx_t *coterr)
 {
     double x = va_arg(args, double);
     char *str = my_put_float_hex(x, "0123456789abcdef");
@@ -23,7 +22,7 @@ char *parameter_a(va_list args, cot_err_t *coterr)
     return str;
 }
 
-char *parameter_aa(va_list args, cot_err_t *coterr)
+char *parameter_aa(va_list args, pf_ctx_t *coterr)
 {
     double x = va_arg(args, double);
     char *str = my_put_float_hex(x, "0123456789ABCDEF");

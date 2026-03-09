@@ -10,9 +10,9 @@
 #include "my/string.h"
 #include "my/utils.h"
 
-#include "my_printf_utils.h"
+#include "internal.h"
 
-char *parameter_n(va_list args, cot_err_t *coterr)
+char *parameter_n(va_list args, pf_ctx_t *coterr)
 {
     int *x = va_arg(args, int *);
     char *str = malloc(sizeof(char) * 1);

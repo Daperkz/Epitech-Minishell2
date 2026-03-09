@@ -15,7 +15,7 @@ INCLUDE	=	$(ROOT_DIR)include/
 # -_- Internal / Private include for my_printf = ./src/printf/private -_-
 MY_PRINTF_INCLUDE	=	$(ROOT_DIR)src/printf/private
 
-CFLAGS	=	-I$(INCLUDE) -I$(MY_PRINTF_INCLUDE) -g3 -Wall -Wextra
+override CFLAGS	+=	-I$(INCLUDE) -I$(MY_PRINTF_INCLUDE) -g3 -Wall -Wextra -MMD -MP
 
 OBJ_D	=	$(ROOT_DIR)obj/
 
@@ -28,6 +28,8 @@ MATH_D	=	$(SRC_D)math/
 UTILS_D	=	$(SRC_D)utils/
 FILE_D	=	$(SRC_D)file/
 MY_PRINTF_D	=	$(SRC_D)printf/
+LINKED_LISTS_D	=	$(SRC_D)linked_lists/
+HASHTABLE_D	=	$(SRC_D)hashtable/
 
 # -_- Directories located in $(STRING_D) = ./src/string/ -_-
 COMPARAISON_D	=	$(STRING_D)comparaison/
@@ -39,6 +41,13 @@ WORD_ARRAY_D	=	$(STRING_D)word_array/
 # -_- Directories located in $(MY_PRINTF_D) = ./src/printf/ -_-
 MY_PRINTF_UTILS_D	=	$(MY_PRINTF_D)utils/
 MY_PRINTF_PARAM_D	=	$(MY_PRINTF_D)parameters/
+MY_PRINTF_MODIFIER_D	=	$(MY_PRINTF_D)modifiers/
+
+# -_- Directories located in $(LINKED_LISTS_D) = ./src/linked_lists/ -_-
+NODE_LL_D	=	$(LINKED_LISTS_D)node/
+SIMPLE_LL_D	=	$(LINKED_LISTS_D)simple/
+DOUBLE_LL_D	=	$(LINKED_LISTS_D)double/
+
 
 # -_- Files located in $(IO_D) = ./src/io/ -_-
 IO_F	=	my_putchar.c	\
@@ -97,7 +106,8 @@ MATH_F	=	my_isneg.c	\
 			my_ipow.c	\
 			my_factorial.c	\
 			my_rounds.c	\
-			my_nbrlen.c
+			my_nbrlen.c	\
+			my_sign.c
 
 # -_- Files located in $(UTILS_D) = ./src/utils/ -_-
 UTILS_F	=	my_swap.c	\
@@ -117,7 +127,7 @@ FILE_F	=	open_file.c	\
 
 # -_- Files located in $(MY_PRINTF_D) = ./src/printf/ -_-
 MY_PRINTF_F	=	my_printf.c	\
-				switch_base_flag.c
+				parser.c
 
 # -_- Files located in $(MY_PRINTF_UTILS_D) = ./src/printf/utils/ -_-
 MY_PRINTF_UTILS_F	=	my_put_float_hex.c \
@@ -136,6 +146,41 @@ MY_PRINTF_PARAM_F	=	parameter_int.c \
 						parameter_p.c \
 						parameter_n.c
 
+# -_- Files located in $(MY_PRINTF_MODIFIER_D) = ./src/printf/src/modifiers/ -_-
+MY_PRINTF_MODIFIER_F	=	precision.c \
+							width.c	\
+							signs.c	\
+							sharp.c
+
+# -_- Files located in $(NODE_LL_D) = ./src/linked_lists/node/ -_-
+NODE_LL_F	=	create.c	\
+				destroy.c
+
+# -_- Files located in $(SIMPLE_LL_D) = ./src/linked_lists/simple/ -_-
+SIMPLE_LL_F	=	create.c	\
+				add.c	\
+				get.c	\
+				dump.c	\
+				pop.c	\
+				destroy.c
+
+# -_- Files located in $(DOUBLE_LL_D) = ./src/linked_lists/double/ -_-
+DOUBLE_LL_F	=	create.c	\
+				add.c	\
+				get.c	\
+				dump.c	\
+				pop.c	\
+				destroy.c
+
+# -_- Files located in $(HASHTABLE_D) = ./src/hashtable/ -_-
+HASHTABLE_F	=	create.c	\
+				insert.c	\
+				pop.c	\
+				get.c	\
+				dump.c	\
+				hash.c	\
+				destroy.c
+
 # -_- Files located in $(SRC_D) = ./src/ -_-
 SRC	=	$(addprefix $(IO_D), $(IO_F)) 	\
 		$(addprefix $(COMPARAISON_D), $(COMPARAISON_F))	\
@@ -143,42 +188,75 @@ SRC	=	$(addprefix $(IO_D), $(IO_F)) 	\
 		$(addprefix $(MANIPULATION_D), $(MANIPULATION_F))	\
 		$(addprefix $(SEARCH_D), $(SEARCH_F))	\
 		$(addprefix $(WORD_ARRAY_D), $(WORD_ARRAY_F))	\
-		$(addprefix $(MATH_D), $(MATH_F))	\
 		$(addprefix $(UTILS_D), $(UTILS_F))	\
+		$(addprefix $(MATH_D), $(MATH_F))	\
 		$(addprefix $(FILE_D), $(FILE_F))	\
 		$(addprefix $(MY_PRINTF_D), $(MY_PRINTF_F))	\
 		$(addprefix $(MY_PRINTF_UTILS_D), $(MY_PRINTF_UTILS_F))	\
 		$(addprefix $(MY_PRINTF_PARAM_D), $(MY_PRINTF_PARAM_F))	\
+		$(addprefix $(MY_PRINTF_MODIFIER_D), $(MY_PRINTF_MODIFIER_F))	\
+		$(addprefix $(NODE_LL_D), $(NODE_LL_F))	\
+		$(addprefix $(SIMPLE_LL_D), $(SIMPLE_LL_F))	\
+		$(addprefix $(DOUBLE_LL_D), $(DOUBLE_LL_F))	\
+		$(addprefix $(HASHTABLE_D), $(HASHTABLE_F))
 
 # -_- puts all .c files wherever they come from into the bin folder as a .o -_-
 OBJ	=	$(SRC:$(SRC_D)%.c=$(OBJ_D)%.o)
+
+DEP	=	$(OBJ:.o=.d)
+
+##	## --__-- PROGRESS BAR LOGIC --__--
+##	TOTAL_FILES := $(words $(SRC))
+##	CUR_FILE := .cur_file
+##	BAR_WIDTH   := 40
+##
+##	define draw_bar
+##		@if [ ! -f $(CUR_FILE) ]; then echo 0 > $(CUR_FILE); fi
+##		@COUNT=$$(($$(cat $(CUR_FILE)) + 1)); \
+##		echo $$COUNT > $(CUR_FILE); \
+##		PERCENT=$$(($$COUNT * 100 / $(TOTAL_FILES))); \
+##		FILLED=$$(($$COUNT * $(BAR_WIDTH) / $(TOTAL_FILES))); \
+##		EMPTY=$$(($(BAR_WIDTH) - $$FILLED)); \
+##		printf "\r\033[1;36m[%3d%%]\033[0m \033[1;32m[" $$PERCENT; \
+##		printf '%.0s#' $$(seq 1 $$FILLED); \
+##		printf '%.0s-' $$(seq 1 $$EMPTY); \
+##		printf "]\033[0m Compiling: \033[0;33m%s\033[0m\033[K" "$$PERCENT" "$1"
+##	endef
 
 ## --__-- RULES --__--
 
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-	ar -rc $@ $^
+	@ar -rc $@ $^
+#	@rm -f $(CUR_FILE)
+	@printf "\033[1;32mBuild Complete!\033[0m\n"
 
 # -_- Creates the bin dir if non existent (only once) -_-
 $(OBJ_D):
-	mkdir -p $@
+	@mkdir -p $@
 
 # -_- Compiles .o files into bin folder from all c files in the VPATH directories -_-
 $(OBJ_D)%.o:	$(SRC_D)%.c | $(OBJ_D)
 	@mkdir -p $(dir $@)
-	$(CC) -o $@ -c $< $(CFLAGS)
+	@$(CC) -o $@ -c $< $(CFLAGS)
+#	$(call draw_bar, $<)
 
 clean:
-	rm -rf $(OBJ_D)
+	@rm -rf $(OBJ_D)
+#	@rm -f $(CUR_FILE)
+	@printf "\033[1;31mObjects cleaned.\033[0m\n"
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@printf "\033[1;31mBinary cleaned.\033[0m\n"
 
 re: fclean $(NAME)
 
 bestre:
-	make fclean
-	make -j4
+	$(MAKE) fclean
+	$(MAKE) -j$$(nproc)
+
+-include $(DEP)
 
 .PHONY:	all	clean	fclean	re	bestre
