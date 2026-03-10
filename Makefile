@@ -76,8 +76,9 @@ clean:
 	make clean -C $(LIB_DIR)
 	rm -rf $(OBJ_D)
 
-fclean:	clean
+fclean:
 	make fclean -C $(LIB_DIR)
+	rm -rf $(OBJ_D)
 	rm -f $(NAME)
 
 re:	fclean	$(NAME)
