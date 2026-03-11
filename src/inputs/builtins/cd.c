@@ -16,11 +16,13 @@
 
 static int update_wd(shell_t *shell)
 {
+    char *new_cwd = getcwd(NULL, 0);
+
+    if (!new_cwd)
+        return (EXIT_SUCCESS);
     free(shell->owd);
     shell->owd = shell->cwd;
-    shell->cwd = getcwd(NULL, 0);
-    if (!shell->cwd)
-        return (EXIT_FAILURE);
+    shell->cwd = new_cwd;
     return (EXIT_SUCCESS);
 }
 
@@ -56,7 +58,6 @@ static int arg_case(shell_t *shell)
             my_fprintf(STDERR, "%s\n", "cd: OLDPWD not set\n");
             return (EXIT_ACTION_DONE);
         }
-        my_printf("%s\n", shell->owd);
         return perform_cd(shell, shell->owd);
     }
     return perform_cd(shell, dest);

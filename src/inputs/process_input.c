@@ -61,7 +61,7 @@ int single_command(shell_t *shell, char *command, int is_piped)
         my_free_word_array(shell->input_array);
         shell->input_array = NULL;
         shell->input_array_len = 0;
-        return (retv == EXIT_SHUTDOWN ? EXIT_SUCCESS : retv);
+        return (retv == EXIT_ACTION_DONE ? EXIT_SUCCESS : retv);
     }
     return not_a_builtin(shell, is_piped);
 }
