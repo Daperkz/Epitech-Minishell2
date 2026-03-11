@@ -32,7 +32,8 @@ SHELL_F	=	init_shell.c	\
 INPUTS_F	=	process_input.c	\
 				parser.c	\
 				executor.c	\
-				builtins_handler.c
+				builtins_handler.c	\
+				pipe_handler.c
 
 BUILTINS_F	=	exit.c	\
 				cd.c	\

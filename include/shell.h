@@ -38,6 +38,7 @@
     #define THE_PROMPT_SIZE 2
 
     #define COMMAND_SEPERATOR ";"
+    #define PIPE_SEPERATOR "|"
 
 typedef struct minishell_s {
     int last_errno;
@@ -53,6 +54,7 @@ typedef struct minishell_s {
     int nbr_commands;
     char **input_array;
     int input_array_len;
+    int pipe_fds[2];
     pid_t child;
     int child_status;
 } shell_t;
@@ -63,11 +65,13 @@ int exit_mysh(ssize_t nread);
 
 int parse_input(shell_t *shell);
 int builtins(shell_t *shell);
-
+int pipe_handler(shell_t *shell, char *command);
 char *find_command(shell_t *shell);
-int execute_command(shell_t *shell, char *program_path);
-
 int process_input(shell_t *shell);
+int single_command(shell_t *shell, char *command, int is_piped);
+
+int execute_child(shell_t *shell, char *program_path);
+int execute_command(shell_t *shell, char *program_path);
 
 void print_the_prompt(shell_t *shell);
 

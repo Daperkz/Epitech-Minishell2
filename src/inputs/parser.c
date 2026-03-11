@@ -30,8 +30,5 @@ int parse_input(shell_t *shell)
         shell->commands = my_str_to_word_array(shell->input, COMMAND_SEPERATOR);
         return (!shell->commands) ? (EXIT_FAILURE) : (EXIT_SUCCESS);
     }
-    shell->input_array = my_str_to_word_array(shell->input, BASIC_SEPERATOR);
-    if (!shell->input_array)
-        return (EXIT_FAILURE);
     return (EXIT_SUCCESS);
 }
