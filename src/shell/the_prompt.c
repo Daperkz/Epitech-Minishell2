@@ -22,7 +22,7 @@ void print_the_prompt(shell_t *shell)
     } else {
         my_fprintf(
             STDOUT_FILENO,
-            "[%d] %s",
+            "\033[38;5;160m[%d]\033[0m %s",
             shell->last_errno, THE_PROMPT
         );
     }
