@@ -230,7 +230,7 @@ all:	$(NAME)
 $(NAME):	$(OBJ)
 	@ar -rc $@ $^
 #	@rm -f $(CUR_FILE)
-	@printf "\033[1;32mBuild Complete!\033[0m\n"
+	@printf "\033[1;32m%s\033[0m\n" "Build Complete!"
 
 # -_- Creates the bin dir if non existent (only once) -_-
 $(OBJ_D):
@@ -245,11 +245,11 @@ $(OBJ_D)%.o:	$(SRC_D)%.c | $(OBJ_D)
 clean:
 	@rm -rf $(OBJ_D)
 #	@rm -f $(CUR_FILE)
-	@printf "\033[1;31mObjects cleaned.\033[0m\n"
+	@printf "\033[1;31m%s\033[0m\n" "Objects cleaned."
 
 fclean: clean
 	@rm -f $(NAME)
-	@printf "\033[1;31mBinary cleaned.\033[0m\n"
+	@printf "\033[1;31m%s\033[0m\n" "Binary cleaned."
 
 re: fclean $(NAME)
 
