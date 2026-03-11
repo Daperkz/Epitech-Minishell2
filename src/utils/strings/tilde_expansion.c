@@ -26,11 +26,12 @@ static int count_apparition(char *str, char c)
 static void fill(shell_t *shell, char *new_input)
 {
     int j = 0;
+    int hwd_len = my_strlen(shell->hwd);
 
     for (int i = 0; shell->input[i]; i++) {
         if (shell->input[i] == '~') {
-            my_strcpy(&new_input[j], shell->hwd);
-            j += my_strlen(shell->hwd);
+            my_strncpy(&new_input[j], shell->hwd, hwd_len);
+            j += hwd_len;
         } else {
             new_input[j] = shell->input[i];
             j++;
