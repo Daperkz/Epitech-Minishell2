@@ -11,52 +11,37 @@
 
 #include "shell.h"
 
-static int count_apparition(char *str, char c)
+static void fill(char *old, char *new, char *hwd)
 {
-    int len = 0;
-
-    while (str && *str) {
-        if (*str == c)
-            len++;
-        str++;
-    }
-    return (len);
-}
-
-static void fill(shell_t *shell, char *new_input)
-{
+    int i = 0;
     int j = 0;
-    int hwd_len = my_strlen(shell->hwd);
 
-    for (int i = 0; shell->input[i]; i++) {
-        if (shell->input[i] == '~') {
-            my_strncpy(&new_input[j], shell->hwd, hwd_len);
-            j += hwd_len;
-        } else {
-            new_input[j] = shell->input[i];
-            j++;
-        }
+    while (old[i] && old[i] != '~') {
+        new[j] = old[i];
+        i++;
+        j++;
     }
-    new_input[j] = '\0';
+    if (old[i] == '~') {
+        my_strcpy(&new[j], hwd);
+        j += my_strlen(hwd);
+        i++;
+    }
+    my_strcpy(&new[j], &old[i]);
 }
 
-int tilde_expansion(shell_t *shell)
+int tilde_expansion(char **str_p, char *hwd)
 {
-    int n;
     int new_len;
     char *new_input = NULL;
 
-    if (!shell->input || !shell->hwd)
+    if (!str_p || !*str_p || !hwd || !my_strchr(*str_p, '~'))
         return (EXIT_SUCCESS);
-    n = count_apparition(shell->input, '~');
-    if (count_apparition(shell->input, '~') == 0)
-        return (EXIT_SUCCESS);
-    new_len = my_strlen(shell->input) + (n * (my_strlen(shell->hwd) - 1));
+    new_len = my_strlen(*str_p) + my_strlen(hwd) - 1;
     new_input = malloc(sizeof(char) * (new_len + 1));
     if (!new_input)
         return (EXIT_FAILURE);
-    fill(shell, new_input);
-    free(shell->input);
-    shell->input = new_input;
+    fill(*str_p, new_input, hwd);
+    free(*str_p);
+    *str_p = new_input;
     return (EXIT_SUCCESS);
 }

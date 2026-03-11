@@ -26,7 +26,7 @@ int parse_input(shell_t *shell)
     strip_endline(shell->input);
     if (!shell->input[0])
         return (EXIT_SUCCESS);
-    if (tilde_expansion(shell) == EXIT_FAILURE)
+    if (tilde_expansion(&shell->input, shell->hwd) == EXIT_FAILURE)
         return (EXIT_FAILURE);
     if (my_strchr(shell->input, *COMMAND_SEPERATOR)) {
         shell->commands = my_str_to_word_array(shell->input, COMMAND_SEPERATOR);
