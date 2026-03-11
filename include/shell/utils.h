@@ -27,4 +27,6 @@ int refresh_path(shell_t *shell);
 int my_isletter(char c);
 int my_str_is_alphanumeric(char *str);
 
+int tilde_expansion(shell_t *shell);
+
 #endif /* !UTILS_H_ */

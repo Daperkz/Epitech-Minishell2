@@ -48,7 +48,8 @@ UTILS_F	=	signal_handling.c	\
 
 STRINGS_F	=	find_command.c	\
 				join_path.c	\
-				my_str_is_alphanumeric.c
+				my_str_is_alphanumeric.c	\
+				tilde_expansion.c
 
 SRC	=	$(addprefix $(SRC_D), minishell.c)	\
 		$(addprefix $(SHELL_D), $(SHELL_F))	\
