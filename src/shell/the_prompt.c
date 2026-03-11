@@ -22,8 +22,8 @@ void print_the_prompt(shell_t *shell)
     } else {
         my_fprintf(
             STDOUT_FILENO,
-            "\033[38;5;160m[%d]\033[0m %s",
-            shell->last_errno, THE_PROMPT
+            "%s[%d]%s %s",
+            ZSH_RED, shell->last_errno, COLOR_RESET, THE_PROMPT
         );
     }
 }

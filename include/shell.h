@@ -31,6 +31,9 @@
     #define ENV_VAR_ZDOTDIR "ZDOTDIR="
     #define ENV_VAR_ZDOTDIR_SIZE 8
 
+    #define ZSH_RED "\033[38;5;160m"
+    #define COLOR_RESET "\033[0m"
+
     #define THE_PROMPT "$ "
     #define THE_PROMPT_SIZE 2
 
