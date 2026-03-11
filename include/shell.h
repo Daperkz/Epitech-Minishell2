@@ -37,6 +37,8 @@
     #define THE_PROMPT "$ "
     #define THE_PROMPT_SIZE 2
 
+    #define COMMAND_SEPERATOR ";"
+
 typedef struct minishell_s {
     int last_errno;
     char **env;
@@ -47,6 +49,8 @@ typedef struct minishell_s {
     pid_t pid;
     char *input;
     ssize_t input_len;
+    char **commands;
+    int nbr_commands;
     char **input_array;
     int input_array_len;
     pid_t child;

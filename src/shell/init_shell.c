@@ -48,6 +48,8 @@ static int external_shell(shell_t *shell)
 {
     shell->input = NULL;
     shell->input_len = 0;
+    shell->commands = NULL;
+    shell->nbr_commands = 0;
     shell->input_array = NULL;
     shell->input_array_len = 0;
     return (EXIT_SUCCESS);
