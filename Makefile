@@ -14,7 +14,7 @@ LIB_DIR	=	$(ROOT_DIR)third_party/my/
 INCLUDE	=	$(ROOT_DIR)include/
 LIB_INCLUDE	=	$(LIB_DIR)include/
 
-CFLAGS	=	-I$(INCLUDE) -I$(LIB_INCLUDE) -g3 -Wall -Wextra
+CFLAGS	=	-I$(INCLUDE) -I$(LIB_INCLUDE) -g3 -Wall -Wextra -MMD -MP
 LDFLAGS	=	-L$(LIB_DIR) -lmy
 
 OBJ_D	=	$(ROOT_DIR)obj/
