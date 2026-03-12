@@ -23,7 +23,8 @@ SRC_D	=	$(ROOT_DIR)src/
 SHELL_D	=	$(SRC_D)shell/
 INPUTS_D	=	$(SRC_D)inputs/
 BUILTINS_D	=	$(INPUTS_D)builtins/
-REDIRECTIONS_D	=	$(INPUTS_D)redirections/
+REDIRECTION_D	=	$(INPUTS_D)redirection/
+PIPE_D	=	$(INPUTS_D)pipe/
 UTILS_D	=	$(SRC_D)utils/
 STRINGS_D	=	$(UTILS_D)strings/
 
@@ -45,10 +46,13 @@ BUILTINS_F	=	exit.c	\
 				setenv.c	\
 				unsetenv.c
 
-REDIRECTIONS_F	=	error.c	\
+REDIRECTION_F	=	error.c	\
 					heredoc.c	\
 					redirect.c	\
 					utils.c
+
+PIPE_F	=	child.c	\
+			executor.c
 
 UTILS_F	=	signal_handling.c	\
 			get_env_var.c	\
@@ -64,7 +68,8 @@ SRC	=	$(addprefix $(SRC_D), minishell.c)	\
 		$(addprefix $(SHELL_D), $(SHELL_F))	\
 		$(addprefix $(INPUTS_D), $(INPUTS_F))	\
 		$(addprefix $(BUILTINS_D), $(BUILTINS_F))	\
-		$(addprefix $(REDIRECTIONS_D), $(REDIRECTIONS_F))	\
+		$(addprefix $(REDIRECTION_D), $(REDIRECTION_F))	\
+		$(addprefix $(PIPE_D), $(PIPE_F))	\
 		$(addprefix $(UTILS_D), $(UTILS_F))	\
 		$(addprefix $(STRINGS_D), $(STRINGS_F))	\
 

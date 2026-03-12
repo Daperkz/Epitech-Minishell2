@@ -50,6 +50,8 @@ int handle_redirections(shell_t *shell);
 
 int builtins(shell_t *shell);
 
+void pipe_child(shell_t *shell, char **pipe_segments, int i, int prev_fd);
+int execute_pipe(shell_t *shell, char **pipe_segments);
 int pipe_handler(shell_t *shell, char *command);
 
 char *find_command(shell_t *shell);
