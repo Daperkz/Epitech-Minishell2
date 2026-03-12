@@ -40,9 +40,18 @@ int exit_mysh(ssize_t nread);
 
 int parse_input(shell_t *shell);
 int single_command(shell_t *shell, char *command, int is_piped);
+
+int file_error(shell_t *shell, char *file);
+void shift_array(shell_t *shell, int index);
+int heredoc(shell_t *shell, int i);
+int redirect(shell_t *shell, int i);
+int check_redirection_errors(shell_t *shell);
 int handle_redirections(shell_t *shell);
+
 int builtins(shell_t *shell);
+
 int pipe_handler(shell_t *shell, char *command);
+
 char *find_command(shell_t *shell);
 int process_input(shell_t *shell);
 int single_command(shell_t *shell, char *command, int is_piped);
