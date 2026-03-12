@@ -16,8 +16,8 @@
 int exit_mysh(ssize_t nread)
 {
     if (nread == -1) {
-        if (isatty(STDIN))
-            write(STDOUT, "exit\n", 5);
+        if (isatty(STDIN_FD))
+            write(STDOUT_FD, "exit\n", 5);
         return (EXIT_SHUTDOWN);
     }
     return (EXIT_SUCCESS);

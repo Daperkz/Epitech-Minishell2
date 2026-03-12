@@ -18,12 +18,12 @@ static char *get_direct_path(shell_t *shell, char *cmd)
 {
     if (access(cmd, F_OK) != 0) {
         shell->last_errno = 1;
-        my_fprintf(STDERR, "%s: Command not found.\n", cmd);
+        my_fprintf(STDERR_FD, "%s: Command not found.\n", cmd);
         return (NULL);
     }
     if (access(cmd, X_OK) == 0)
         return my_strdup(cmd);
-    my_fprintf(STDERR, "%s: Permission denied.\n", cmd);
+    my_fprintf(STDERR_FD, "%s: Permission denied.\n", cmd);
     return (NULL);
 }
 
@@ -43,6 +43,6 @@ char *find_command(shell_t *shell)
         free(path);
     }
     shell->last_errno = EPERM;
-    my_fprintf(STDERR, "%s: Command not found.\n", shell->input_array[0]);
+    my_fprintf(STDERR_FD, "%s: Command not found.\n", shell->input_array[0]);
     return (NULL);
 }

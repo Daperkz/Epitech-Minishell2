@@ -20,11 +20,11 @@ static void error_printing(char *cmd)
 {
     switch (errno) {
         case ENOEXEC:
-            my_fprintf(STDERR, "%s: %s. Binary file not executable.\n",
+            my_fprintf(STDERR_FD, "%s: %s. Binary file not executable.\n",
                 cmd, strerror(errno));
             break;
         default :
-            my_fprintf(STDERR, "%s: %s.\n", cmd, strerror(errno));
+            my_fprintf(STDERR_FD, "%s: %s.\n", cmd, strerror(errno));
     }
 }
 

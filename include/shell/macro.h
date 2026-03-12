@@ -36,4 +36,13 @@
     #define COMMAND_SEPERATOR ";"
     #define PIPE_SEPERATOR "|"
 
+    #define ROT ">" //redirection out type
+    #define ROAT ">>" //redirection out append type
+    #define RIT "<" //redirection in type
+    #define RHT "<<" //redirection heredoc type
+    #define REDIR_MSSING_NAME_ERR "Missing name for redirect\n"
+    #define REDIR_AMBIGUOUS_OUT_ERR "Ambiguous output redirect.\n"
+    #define REDIR_AMBIGUOUS_IN_ERR "Ambiguous input redirect.\n"
+    #define HEREDOC_TMP_FILE ".heredoc_tmp"
+
 #endif /* !SHELL_MACRO_H_ */

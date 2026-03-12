@@ -29,7 +29,7 @@ static int update_wd(shell_t *shell)
 static int perform_cd(shell_t *shell, char *dest)
 {
     if (chdir(dest) != 0) {
-        my_fprintf(STDERR, "%s: %s.\n", dest, strerror(errno));
+        my_fprintf(STDERR_FD, "%s: %s.\n", dest, strerror(errno));
         shell->last_errno = errno;
         return (EXIT_ACTION_DONE);
     }
@@ -41,7 +41,7 @@ static int perform_cd(shell_t *shell, char *dest)
 static int no_arg_case(shell_t *shell)
 {
     if (!shell->hwd) {
-        my_fprintf(STDERR, "%s\n", "HOME not set");
+        my_fprintf(STDERR_FD, "%s\n", "HOME not set");
         return (EXIT_ACTION_DONE);
     }
     return perform_cd(shell, shell->hwd);
@@ -55,7 +55,7 @@ static int arg_case(shell_t *shell)
         return no_arg_case(shell);
     if (my_strcmp(dest, "-") == 0) {
         if (!shell->owd) {
-            my_fprintf(STDERR, "%s\n", "cd: OLDPWD not set\n");
+            my_fprintf(STDERR_FD, "%s\n", "cd: OLDPWD not set\n");
             return (EXIT_ACTION_DONE);
         }
         return perform_cd(shell, shell->owd);

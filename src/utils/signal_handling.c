@@ -29,12 +29,12 @@ void handle_child_status(shell_t *shell, int status)
     if (WIFSIGNALED(status)) {
         sig = WTERMSIG(status);
         if (sig == SIGSEGV)
-            my_fprintf(STDERR, "Segmentation fault");
+            my_fprintf(STDERR_FD, "Segmentation fault");
         if (sig == SIGFPE)
-            my_fprintf(STDERR, "Floating exception");
+            my_fprintf(STDERR_FD, "Floating exception");
         if (WCOREDUMP(status))
-            my_fprintf(STDERR, " (core dumped)");
-        my_fprintf(STDERR, "\n");
+            my_fprintf(STDERR_FD, " (core dumped)");
+        my_fprintf(STDERR_FD, "\n");
         shell->last_errno = 128 + sig;
     }
 }

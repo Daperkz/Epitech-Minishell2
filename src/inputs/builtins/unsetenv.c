@@ -41,7 +41,7 @@ int unsetenv_builtin(shell_t *shell)
     int retv = (EXIT_ACTION_DONE);
 
     if (shell->input_array_len < 2) {
-        my_fprintf(STDERR, "unsetenv: Too few arguments.\n");
+        my_fprintf(STDERR_FD, "unsetenv: Too few arguments.\n");
         shell->last_errno = 1;
         return (EXIT_ACTION_DONE);
     }

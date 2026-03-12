@@ -51,8 +51,8 @@ static void clean_input_array(shell_t *shell)
 
 static void restore_fds(int stdout, int stdin)
 {
-    dup2(stdout, STDOUT_FILENO);
-    dup2(stdin, STDIN_FILENO);
+    dup2(stdout, STDOUT_FD);
+    dup2(stdin, STDIN_FD);
     close(stdout);
     close(stdin);
 }
@@ -77,8 +77,8 @@ static int command_flow(shell_t *shell, char *command, int is_piped)
 int single_command(shell_t *shell, char *command, int is_piped)
 {
     int retv = (EXIT_SUCCESS);
-    int save_stdout = dup(STDOUT);
-    int save_stdin = dup(STDIN);
+    int save_stdout = dup(STDOUT_FD);
+    int save_stdin = dup(STDIN_FD);
 
     retv = command_flow(shell, command, is_piped);
     clean_input_array(shell);

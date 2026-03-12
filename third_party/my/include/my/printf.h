@@ -8,9 +8,9 @@
 #ifndef MY_PRINTF_H
     #define MY_PRINTF_H
 
-    #define STDIN 0
-    #define STDOUT 1
-    #define STDERR 2
+    #define STDIN_FD 0
+    #define STDOUT_FD 1
+    #define STDERR_FD 2
 
 int my_printf(const char *format, ...);
 

@@ -20,7 +20,7 @@ int env_builtin(shell_t *shell)
         return (EXIT_ACTION_DONE);
     } else {
         shell->last_errno = EINVAL;
-        my_fprintf(STDERR, "%s: Invalid argument.\n", ENV_INPUT);
+        my_fprintf(STDERR_FD, "%s: Invalid argument.\n", ENV_INPUT);
         return (EXIT_ACTION_DONE);
     }
     return (EXIT_SUCCESS);

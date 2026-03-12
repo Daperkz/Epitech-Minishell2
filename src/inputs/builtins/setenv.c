@@ -75,11 +75,12 @@ static int new_pathenv(shell_t *shell, char *name, char *value)
 static int error_case(char *env_name)
 {
     if (!my_isletter(env_name[0])) {
-        my_fprintf(STDERR, "setenv: Variable name must begin with a letter.\n");
+        my_fprintf(STDERR_FD,
+            "setenv: Variable name must begin with a letter.\n");
         return (EXIT_FAILURE);
     }
     if (!my_str_is_alphanumeric(env_name)) {
-        my_fprintf(STDERR,
+        my_fprintf(STDERR_FD,
             "setenv: Variable name must contain alphanumeric characters.\n");
         return (EXIT_FAILURE);
     }
@@ -98,7 +99,7 @@ int setenv_builtin(shell_t *shell)
         return (EXIT_ACTION_DONE);
     } else if (shell->input_array_len > 3) {
         shell->last_errno = EINVAL;
-        my_fprintf(STDERR, "setenv: Too many arguments.\n");
+        my_fprintf(STDERR_FD, "setenv: Too many arguments.\n");
         return (EXIT_ACTION_DONE);
     }
     if (error_case(env_name) == (EXIT_FAILURE)) {

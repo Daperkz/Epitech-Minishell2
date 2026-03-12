@@ -23,7 +23,7 @@ int exit_builtin(shell_t *shell)
             shell->last_errno = my_atoi(shell->input_array[1]);
         } else {
             shell->last_errno = EINVAL;
-            my_fprintf(STDERR, "%s: Expression Syntax.\n", EXIT_INPUT);
+            my_fprintf(STDERR_FD, "%s: Expression Syntax.\n", EXIT_INPUT);
             return (EXIT_ACTION_DONE);
         }
     }

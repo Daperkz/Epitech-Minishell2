@@ -12,7 +12,7 @@
 
 void print_the_prompt(shell_t *shell)
 {
-    if (!isatty(STDIN))
+    if (!isatty(STDIN_FD))
         return;
     if (shell->last_errno == 0) {
         my_fprintf(
