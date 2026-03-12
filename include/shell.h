@@ -39,6 +39,7 @@ int init_shell(shell_t *shell, char **env);
 int exit_mysh(ssize_t nread);
 
 int parse_input(shell_t *shell);
+int handle_redirections(shell_t *shell);
 int builtins(shell_t *shell);
 int pipe_handler(shell_t *shell, char *command);
 char *find_command(shell_t *shell);

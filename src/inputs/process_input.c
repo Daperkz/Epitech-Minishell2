@@ -55,6 +55,9 @@ int single_command(shell_t *shell, char *command, int is_piped)
     shell->input_array_len = my_word_array_len(shell->input_array);
     if (shell->input_array_len < 1)
         return (EXIT_SUCCESS);
+    retv = handle_redirections(shell);
+    if (retv == EXIT_FAILURE || retv == EXIT_ACTION_DONE)
+        return (retv);
     retv = builtins(shell);
     if (retv == EXIT_FAILURE || retv == EXIT_SHUTDOWN ||
         retv == EXIT_ACTION_DONE) {

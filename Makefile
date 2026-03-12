@@ -33,7 +33,8 @@ INPUTS_F	=	process_input.c	\
 				parser.c	\
 				executor.c	\
 				builtins_handler.c	\
-				pipe_handler.c
+				pipe_handler.c	\
+				redirections_handler.c
 
 BUILTINS_F	=	exit.c	\
 				cd.c	\
