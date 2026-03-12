@@ -29,8 +29,9 @@ SHELL_F	=	init_shell.c	\
 			the_prompt.c	\
 			destroy_shell.c
 
-INPUTS_F	=	process_input.c	\
-				parser.c	\
+INPUTS_F	=	parser.c	\
+				process_input.c	\
+				single_command.c	\
 				executor.c	\
 				builtins_handler.c	\
 				pipe_handler.c	\
