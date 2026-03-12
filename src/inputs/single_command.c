@@ -33,10 +33,10 @@ static int not_a_builtin(shell_t *shell, int is_piped)
 
 static int create_input_array(shell_t *shell, char *command)
 {
-    shell->input_array = my_str_to_word_array(command, BASIC_SEPERATOR);
+    shell->input_array = my_str_to_str_arr(command, BASIC_SEPERATOR);
     if (!shell->input_array)
         return (EXIT_FAILURE);
-    shell->input_array_len = my_word_array_len(shell->input_array);
+    shell->input_array_len = my_len_str_arr(shell->input_array);
     if (shell->input_array_len < 1)
         return (EXIT_ACTION_DONE);
     return (EXIT_SUCCESS);
@@ -44,7 +44,7 @@ static int create_input_array(shell_t *shell, char *command)
 
 static void clean_input_array(shell_t *shell)
 {
-    my_free_word_array(shell->input_array);
+    my_free_str_arr(shell->input_array);
     shell->input_array = NULL;
     shell->input_array_len = 0;
 }

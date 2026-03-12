@@ -36,7 +36,7 @@ COMPARAISON_D	=	$(STRING_D)comparaison/
 CONVERT_D	=	$(STRING_D)convert/
 MANIPULATION_D	=	$(STRING_D)manipulation/
 SEARCH_D	=	$(STRING_D)search/
-WORD_ARRAY_D	=	$(STRING_D)word_array/
+STRING_ARRAY_D	=	$(STRING_D)string_array/
 
 # -_- Directories located in $(MY_PRINTF_D) = ./src/printf/ -_-
 MY_PRINTF_UTILS_D	=	$(MY_PRINTF_D)utils/
@@ -90,12 +90,12 @@ SEARCH_F	=	my_strchr.c	\
 				my_strsep.c	\
 				my_strstr.c
 
-# -_- Files located in $(WORD_ARRAY_D) = ./src/string/word_array/ -_-
-WORD_ARRAY_F	=	my_str_to_word_array.c	\
-					my_print_word_array.c	\
-					my_word_array_len.c	\
-					my_copy_word_array.c	\
-					my_free_word_array.c
+# -_- Files located in $(STRING_ARRAY_D) = ./src/string/string_array/ -_-
+STRING_ARRAY_F	=	my_str_to_str_arr.c	\
+					my_put_str_arr.c	\
+					my_len_str_arr.c	\
+					my_cpy_str_arr.c	\
+					my_free_str_arr.c
 
 # -_- Files located in $(MATH_D) = ./src/math/ -_-
 MATH_F	=	my_isneg.c	\
@@ -187,7 +187,7 @@ SRC	=	$(addprefix $(IO_D), $(IO_F)) 	\
 		$(addprefix $(CONVERT_D), $(CONVERT_F))	\
 		$(addprefix $(MANIPULATION_D), $(MANIPULATION_F))	\
 		$(addprefix $(SEARCH_D), $(SEARCH_F))	\
-		$(addprefix $(WORD_ARRAY_D), $(WORD_ARRAY_F))	\
+		$(addprefix $(STRING_ARRAY_D), $(STRING_ARRAY_F))	\
 		$(addprefix $(UTILS_D), $(UTILS_F))	\
 		$(addprefix $(MATH_D), $(MATH_F))	\
 		$(addprefix $(FILE_D), $(FILE_F))	\

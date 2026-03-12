@@ -47,7 +47,7 @@ int process_input(shell_t *shell)
     } else if (shell->commands) {
         retv = multiple_commands(shell);
     }
-    my_free_word_array(shell->commands);
+    my_free_str_arr(shell->commands);
     shell->commands = NULL;
     shell->nbr_commands = 0;
     return (retv);

@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2025
-** my_str_to_word_array
+** my_str_to_str_arr
 ** File description:
 ** splits a string into words.
 ** Separators will all be non-alphanumeric characters.
@@ -58,25 +58,25 @@ static int skip_seps(char const *str, char const *seps, int *i_ptr)
     return (*i_ptr);
 }
 
-char **my_str_to_word_array(char const *str, char const *seps)
+char **my_str_to_str_arr(char const *str, char const *seps)
 {
-    char **word_array = NULL;
+    char **str_arr = NULL;
     int wi = 0;
 
     if (!str || !seps)
         return NULL;
-    word_array = malloc(sizeof(char *) * (nbr_words(str, seps) + 1));
-    if (!word_array)
+    str_arr = malloc(sizeof(char *) * (nbr_words(str, seps) + 1));
+    if (!str_arr)
         return NULL;
     for (int i = 0; str[i]; wi++) {
         if (!str[skip_seps(str, seps, &i)])
             break;
-        word_array[wi] = extract_word(str, seps, &i);
-        if (!word_array[wi]) {
-            my_free_word_array(word_array);
+        str_arr[wi] = extract_word(str, seps, &i);
+        if (!str_arr[wi]) {
+            my_free_str_arr(str_arr);
             return NULL;
         }
     }
-    word_array[wi] = NULL;
-    return word_array;
+    str_arr[wi] = NULL;
+    return str_arr;
 }

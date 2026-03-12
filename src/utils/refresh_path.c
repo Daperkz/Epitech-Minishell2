@@ -12,7 +12,7 @@
 int refresh_path(shell_t *shell)
 {
     if (shell->path_arr) {
-        my_free_word_array(shell->path_arr);
+        my_free_str_arr(shell->path_arr);
         shell->path_arr = NULL;
     }
     shell->path_arr = get_path_array(shell->env);

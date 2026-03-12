@@ -23,7 +23,7 @@ char **get_path_array(char **env)
     }
     if (!path_var)
         return (NULL);
-    path_arr = my_str_to_word_array(path_var, ":");
+    path_arr = my_str_to_str_arr(path_var, ":");
     if (!path_arr)
         return (char **)-1;
     return (path_arr);

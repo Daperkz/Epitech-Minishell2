@@ -29,7 +29,7 @@ int parse_input(shell_t *shell)
     if (tilde_expansion(&shell->input, shell->hwd) == EXIT_FAILURE)
         return (EXIT_FAILURE);
     if (my_strchr(shell->input, *COMMAND_SEPERATOR)) {
-        shell->commands = my_str_to_word_array(shell->input, COMMAND_SEPERATOR);
+        shell->commands = my_str_to_str_arr(shell->input, COMMAND_SEPERATOR);
         return (!shell->commands) ? (EXIT_FAILURE) : (EXIT_SUCCESS);
     }
     return (EXIT_SUCCESS);

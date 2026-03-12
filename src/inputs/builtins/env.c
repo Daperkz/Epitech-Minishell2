@@ -16,7 +16,7 @@ int env_builtin(shell_t *shell)
 {
     shell->last_errno = 0;
     if (shell->input_array_len == 1) {
-        my_print_word_array(shell->env, '\n');
+        my_put_str_arr(shell->env, '\n');
         return (EXIT_ACTION_DONE);
     } else {
         shell->last_errno = EINVAL;

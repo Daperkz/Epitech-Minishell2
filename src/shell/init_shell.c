@@ -25,7 +25,7 @@ static char *getowd(char **env, char *cwd)
 static int internal_shell(shell_t *shell, char **env)
 {
     shell->last_errno = 0;
-    shell->env = my_copy_word_array(env);
+    shell->env = my_cpy_str_arr(env);
     if (shell->env == MALLOC_FAIL)
         return (EXIT_FAILURE);
     shell->path_arr = get_path_array(shell->env);

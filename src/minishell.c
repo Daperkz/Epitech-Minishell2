@@ -24,7 +24,7 @@ int minishell(shell_t *shell)
         if (exit_mysh(shell->input_len) == EXIT_SHUTDOWN)
             return (shell->last_errno);
         retv = process_input(shell);
-        my_free_word_array(shell->input_array);
+        my_free_str_arr(shell->input_array);
         shell->input_array = NULL;
         if (retv == EXIT_FAILURE)
             return (EXIT_ERROR);

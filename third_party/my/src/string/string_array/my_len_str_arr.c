@@ -1,17 +1,17 @@
 /*
 ** EPITECH PROJECT, 2025
-** my_word_array_len.c
+** my_len_str_arr.c
 ** File description:
 ** calculates the number of words the array has
 */
 
-long my_word_array_len(char **word_array)
+long my_len_str_arr(char **str_arr)
 {
     long len = 0;
 
-    while (word_array && *word_array) {
+    while (str_arr && *str_arr) {
         len++;
-        word_array++;
+        str_arr++;
     }
     return len;
 }

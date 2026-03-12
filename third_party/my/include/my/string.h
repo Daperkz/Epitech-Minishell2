@@ -10,13 +10,13 @@
 
 
 
-/* --- word array --- */
+/* --- string array --- */
 
-char **my_str_to_word_array(char const *str, char const *seps);
-long my_word_array_len(char **word_array);
-void my_print_word_array(char **word_array, char sep);
-char **my_copy_word_array(char **word_array);
-void my_free_word_array(char **word_array);
+char **my_str_to_str_arr(char const *str, char const *seps);
+long my_len_str_arr(char **str_arr);
+void my_put_str_arr(char **str_arr, char sep);
+char **my_cpy_str_arr(char **str_arr);
+void my_free_str_arr(char **str_arr);
 
 /* --- convert --- */
 

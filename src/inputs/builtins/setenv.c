@@ -41,7 +41,7 @@ static int update_existing_var(shell_t *shell, char *name, char *value, int i)
 static int add_new_var(shell_t *shell, char *name, char *value)
 {
     char **cur_env = shell->env;
-    char **new_env = malloc(sizeof(char *) * (my_word_array_len(cur_env) + 2));
+    char **new_env = malloc(sizeof(char *) * (my_len_str_arr(cur_env) + 2));
     int i = 0;
 
     if (!new_env)
@@ -95,7 +95,7 @@ int setenv_builtin(shell_t *shell)
 
     shell->last_errno = 0;
     if (shell->input_array_len == 1) {
-        my_print_word_array(shell->env, '\n');
+        my_put_str_arr(shell->env, '\n');
         return (EXIT_ACTION_DONE);
     } else if (shell->input_array_len > 3) {
         shell->last_errno = EINVAL;
