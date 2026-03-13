@@ -24,7 +24,7 @@ static int not_a_builtin(shell_t *shell, int is_piped)
     } else if (!program_path)
         return (EXIT_SUCCESS);
     if (is_piped) {
-        retv = execute_child(shell, program_path);
+        execute_child(shell, program_path);
         free(program_path);
         return (EXIT_FAILURE);
     }

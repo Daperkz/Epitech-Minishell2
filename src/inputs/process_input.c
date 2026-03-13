@@ -40,8 +40,9 @@ int process_input(shell_t *shell)
 {
     int retv = EXIT_FAILURE;
 
-    if (parse_input(shell) == EXIT_FAILURE)
-        return (EXIT_FAILURE);
+    retv = parse_input(shell);
+    if (retv == EXIT_FAILURE || retv == EXIT_ACTION_DONE)
+        return (retv);
     if (!shell->commands) {
         retv = pipe_handler(shell, shell->input);
     } else if (shell->commands) {
