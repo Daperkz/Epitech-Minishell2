@@ -43,6 +43,8 @@
     #define REDIR_MSSING_NAME_ERR "Missing name for redirect\n"
     #define REDIR_AMBIGUOUS_OUT_ERR "Ambiguous output redirect.\n"
     #define REDIR_AMBIGUOUS_IN_ERR "Ambiguous input redirect.\n"
-    #define HEREDOC_TMP_FILE ".heredoc_tmp"
+    #define REDIR_HEREDOC_TMP_FILE ".heredoc_tmp"
+    #define REDIR_HEREDOC_MESSAGE "? "
+    #define REDIR_HEREDOC_MESSAGE_LEN 2
 
 #endif /* !SHELL_MACRO_H_ */

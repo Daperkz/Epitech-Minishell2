@@ -6,6 +6,8 @@
 */
 
 #include <stdlib.h>
+#include <stdarg.h>
+#include <stdio.h>
 
 #include <my/printf.h>
 #include <my/string.h>
@@ -74,6 +76,19 @@ static int command_flow(shell_t *shell, char *command, int is_piped)
     return not_a_builtin(shell, is_piped);
 }
 
+static void clean_tmp_files(int size, ...)
+{
+    va_list list = {0};
+    char *file = NULL;
+
+    va_start(list, size);
+    for (int i = 0; i < size; i++) {
+        file = va_arg(list, char *);
+        remove(file);
+    }
+    va_end(list);
+}
+
 int single_command(shell_t *shell, char *command, int is_piped)
 {
     int retv = (EXIT_SUCCESS);
@@ -83,5 +98,6 @@ int single_command(shell_t *shell, char *command, int is_piped)
     retv = command_flow(shell, command, is_piped);
     clean_input_array(shell);
     restore_fds(save_stdout, save_stdin);
+    clean_tmp_files(1, REDIR_HEREDOC_TMP_FILE);
     return (retv == EXIT_ACTION_DONE ? EXIT_SUCCESS : retv);
 }
