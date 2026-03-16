@@ -11,6 +11,7 @@
 
 #include <my/printf.h>
 #include <my/string.h>
+#include <my/utils.h>
 
 #include "shell.h"
 
@@ -76,6 +77,7 @@ static int command_flow(shell_t *shell, char *command, int is_piped)
     return not_a_builtin(shell, is_piped);
 }
 
+// remove(file); (non authorized function)
 static void clean_tmp_files(int size, ...)
 {
     va_list list = {0};
@@ -84,7 +86,7 @@ static void clean_tmp_files(int size, ...)
     va_start(list, size);
     for (int i = 0; i < size; i++) {
         file = va_arg(list, char *);
-        remove(file);
+        UNUSED(file);
     }
     va_end(list);
 }

@@ -92,10 +92,12 @@ $(OBJ_D)%.o:	$(SRC_D)%.c	|	$(OBJ_D)
 clean:
 	make clean -C $(LIB_DIR)
 	rm -rf $(OBJ_D)
+	rm -f .heredoc_tmp
 
 fclean:
 	make fclean -C $(LIB_DIR)
 	rm -rf $(OBJ_D)
+	rm -f .heredoc_tmp
 	rm -f $(NAME)
 
 re:	fclean	$(NAME)
