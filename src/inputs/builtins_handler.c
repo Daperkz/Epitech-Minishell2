@@ -9,6 +9,28 @@
 
 #include "shell.h"
 
+int is_builtin(char *cmd)
+{
+    char **tmp = NULL;
+    int retv = 0;
+
+    if (!cmd)
+        return 0;
+    tmp = my_str_to_str_arr(cmd, BASIC_SEPERATOR);
+    if (!tmp || !tmp[0]) {
+        my_free_str_arr(tmp);
+        return 0;
+    }
+    retv = (my_strcmp(cmd, CD_INPUT) == 0 ||
+            my_strcmp(cmd, SETENV_INPUT) == 0 ||
+            my_strcmp(cmd, UNSETENV_INPUT) == 0 ||
+            my_strcmp(cmd, ENV_INPUT) == 0 ||
+            my_strcmp(cmd, EXIT_INPUT) == 0
+        );
+    my_free_str_arr(tmp);
+    return (retv);
+}
+
 int builtins(shell_t *shell)
 {
     static const builtin_t builtin_arr[] = {

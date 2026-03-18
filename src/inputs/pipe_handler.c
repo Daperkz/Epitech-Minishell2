@@ -20,7 +20,7 @@ int pipe_handler(shell_t *shell, char *command)
     if (!pipe_segments)
         return (EXIT_FAILURE);
     if (!pipe_segments[1]) {
-        if (!pipe_segments[0]) {
+        if (!pipe_segments[0] && my_strchr(command, '|')) {
             shell->last_errno = 1;
             my_fprintf(STDERR_FD, "Invalid null command.\n");
             return (EXIT_SUCCESS);

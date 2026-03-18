@@ -60,7 +60,7 @@ static void restore_fds(int stdout, int stdin)
     close(stdin);
 }
 
-static int command_flow(shell_t *shell, char *command, int is_piped)
+int command_flow(shell_t *shell, char *command, int is_piped)
 {
     int retv = (EXIT_SUCCESS);
 
@@ -98,8 +98,9 @@ int single_command(shell_t *shell, char *command, int is_piped)
     int save_stdin = dup(STDIN_FD);
 
     retv = command_flow(shell, command, is_piped);
+    retv = (retv == EXIT_ACTION_DONE) ? EXIT_SUCCESS : retv;
     clean_input_array(shell);
     restore_fds(save_stdout, save_stdin);
     clean_tmp_files(1, REDIR_HEREDOC_TMP_FILE);
-    return (retv == EXIT_ACTION_DONE ? EXIT_SUCCESS : retv);
+    return (retv);
 }

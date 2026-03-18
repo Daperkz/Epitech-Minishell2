@@ -39,6 +39,7 @@ int init_shell(shell_t *shell, char **env);
 int exit_mysh(ssize_t nread);
 
 int parse_input(shell_t *shell);
+int command_flow(shell_t *shell, char *command, int is_piped);
 int single_command(shell_t *shell, char *command, int is_piped);
 
 int file_error(shell_t *shell, char *file);
@@ -49,6 +50,7 @@ int check_redirection_errors(shell_t *shell);
 int handle_redirections(shell_t *shell);
 
 int builtins(shell_t *shell);
+int is_builtin(char *cmd);
 
 void pipe_child(shell_t *shell, char **pipe_segments, int i, int prev_fd);
 int execute_pipe(shell_t *shell, char **pipe_segments);
