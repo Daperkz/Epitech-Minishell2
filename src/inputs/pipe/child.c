@@ -27,4 +27,6 @@ void pipe_child(shell_t *shell, char **pipe_segments, int i, int prev_fd)
         retv = single_command(shell, pipe_segments[i], 1);
         exit(retv);
     }
+    if (prev_fd != 0)
+        close(prev_fd);
 }

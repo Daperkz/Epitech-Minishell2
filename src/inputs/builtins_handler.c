@@ -22,11 +22,11 @@ int is_builtin(char *cmd)
         return 0;
     }
     retv = (my_strcmp(cmd, CD_INPUT) == 0 ||
-            my_strcmp(cmd, SETENV_INPUT) == 0 ||
-            my_strcmp(cmd, UNSETENV_INPUT) == 0 ||
-            my_strcmp(cmd, ENV_INPUT) == 0 ||
-            my_strcmp(cmd, EXIT_INPUT) == 0
-        );
+        my_strcmp(cmd, SETENV_INPUT) == 0 ||
+        my_strcmp(cmd, UNSETENV_INPUT) == 0 ||
+        my_strcmp(cmd, ENV_INPUT) == 0 ||
+        my_strcmp(cmd, EXIT_INPUT) == 0
+    );
     my_free_str_arr(tmp);
     return (retv);
 }

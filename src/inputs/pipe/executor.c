@@ -17,9 +17,10 @@ int execute_pipe(shell_t *shell, char **pipe_segments)
     for (int i = 0; pipe_segments[i]; i++) {
         if (pipe_segments[i + 1])
             pipe(shell->pipe_fds);
-        pipe_child(shell, pipe_segments, i, prev_fd);
-        if (prev_fd != 0)
-            close(prev_fd);
+        if (is_builtin(pipe_segments[i])) {
+            pipe_builtin(shell, pipe_segments, i, prev_fd);
+        } else
+            pipe_child(shell, pipe_segments, i, prev_fd);
         if (pipe_segments[i + 1]) {
             close(shell->pipe_fds[1]);
             prev_fd = shell->pipe_fds[0];

@@ -52,7 +52,8 @@ REDIRECTION_F	=	error.c	\
 					utils.c
 
 PIPE_F	=	child.c	\
-			executor.c
+			executor.c	\
+			builtin.c
 
 UTILS_F	=	signal_handling.c	\
 			get_env_var.c	\

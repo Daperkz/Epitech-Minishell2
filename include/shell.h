@@ -54,6 +54,7 @@ int is_builtin(char *cmd);
 
 void pipe_child(shell_t *shell, char **pipe_segments, int i, int prev_fd);
 int execute_pipe(shell_t *shell, char **pipe_segments);
+int pipe_builtin(shell_t *shell, char **pipe_segments, int i, int prev_fd);
 int pipe_handler(shell_t *shell, char *command);
 
 char *find_command(shell_t *shell);
