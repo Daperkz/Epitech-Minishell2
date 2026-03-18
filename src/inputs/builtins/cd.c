@@ -19,7 +19,7 @@ static int update_wd(shell_t *shell)
     char *new_cwd = getcwd(NULL, 0);
 
     if (!new_cwd)
-        return (EXIT_SUCCESS);
+        return (EXIT_FAILURE);
     free(shell->owd);
     shell->owd = shell->cwd;
     shell->cwd = new_cwd;
@@ -44,7 +44,7 @@ static int no_arg_case(shell_t *shell)
         my_fprintf(STDERR_FD, "%s\n", "HOME not set");
         return (EXIT_ACTION_DONE);
     }
-    return perform_cd(shell, shell->hwd);
+    return (perform_cd(shell, shell->hwd));
 }
 
 static int arg_case(shell_t *shell)
@@ -58,9 +58,9 @@ static int arg_case(shell_t *shell)
             my_fprintf(STDERR_FD, "%s\n", "cd: OLDPWD not set\n");
             return (EXIT_ACTION_DONE);
         }
-        return perform_cd(shell, shell->owd);
+        return (perform_cd(shell, shell->owd));
     }
-    return perform_cd(shell, dest);
+    return (perform_cd(shell, dest));
 }
 
 int cd_builtin(shell_t *shell)

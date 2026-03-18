@@ -22,7 +22,7 @@ int builtins(shell_t *shell)
         return (EXIT_ACTION_DONE);
     for (int i = 0; builtin_arr[i].name; i++) {
         if (my_strcmp(shell->input_array[0], builtin_arr[i].name) == 0)
-            return builtin_arr[i].func(shell);
+            return (builtin_arr[i].func(shell));
     }
     return (EXIT_SUCCESS);
 }

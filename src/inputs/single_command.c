@@ -73,8 +73,8 @@ static int command_flow(shell_t *shell, char *command, int is_piped)
     retv = builtins(shell);
     if (retv == EXIT_FAILURE || retv == EXIT_SHUTDOWN ||
         retv == EXIT_ACTION_DONE)
-        return retv;
-    return not_a_builtin(shell, is_piped);
+        return (retv);
+    return (not_a_builtin(shell, is_piped));
 }
 
 // remove(file); (non authorized function)
