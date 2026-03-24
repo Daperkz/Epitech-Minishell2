@@ -16,7 +16,7 @@ void print_the_prompt(shell_t *shell)
         return;
     if (shell->last_errno == 0) {
         my_fprintf(
-            STDOUT_FILENO,
+            STDOUT_FD,
             "%s➜%s  %s%s%s %s",
             ZSH_NOERR_COLOR, COLOR_RESET,
             ZSH_CWD_COLOR, my_strrchr(shell->cwd, '/') + 1, COLOR_RESET,
@@ -24,7 +24,7 @@ void print_the_prompt(shell_t *shell)
         );
     } else {
         my_fprintf(
-            STDOUT_FILENO,
+            STDOUT_FD,
             "%s[%d] ➜%s  %s%s%s %s",
             ZSH_ERR_COLOR, shell->last_errno, COLOR_RESET,
             ZSH_CWD_COLOR, my_strrchr(shell->cwd, '/') + 1, COLOR_RESET,
