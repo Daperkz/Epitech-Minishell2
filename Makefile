@@ -80,22 +80,19 @@ OBJ	=	$(SRC:$(SRC_D)%.c=$(OBJ_D)%.o)
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-	@make -j$$(nproc) -C $(LIB_DIR)
+	@$(MAKE) -j$$(nproc) -C $(LIB_DIR)
 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
-$(OBJ_D):
-	mkdir -p $@
-
-$(OBJ_D)%.o:	$(SRC_D)%.c	|	$(OBJ_D)
+$(OBJ_D)%.o:	$(SRC_D)%.c
 	@mkdir -p $(dir $@)
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 clean:
-	@make clean -C $(LIB_DIR)
+	@$(MAKE) clean -C $(LIB_DIR)
 	rm -rf $(OBJ_D)
 
 fclean:
-	@make fclean -C $(LIB_DIR)
+	@$(MAKE) fclean -C $(LIB_DIR)
 	rm -rf $(OBJ_D)
 	rm -f $(NAME)
 
