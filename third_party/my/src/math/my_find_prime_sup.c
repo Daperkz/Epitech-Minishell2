@@ -10,7 +10,7 @@
 
 int my_find_prime_sup(int nb)
 {
-    int i = nb + 1;
+    int i = nb;
 
     while (!my_is_prime(i))
         i++;

@@ -23,7 +23,7 @@ int my_is_prime(int nb)
 {
     int wall = my_rounded_square_root(nb);
 
-    if (nb == 1 || nb == 0)
+    if (nb <= 1)
         return 0;
     for (int i = 2; i <= wall + 1; i++) {
         if (nb % i == 0)

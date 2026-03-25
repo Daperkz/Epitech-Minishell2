@@ -6,7 +6,9 @@
 ##
 
 NAME	=	libmy.a
+
 CC	=	epiclang
+AR	=	ar
 
 ROOT_DIR	=	./
 
@@ -15,7 +17,10 @@ INCLUDE	=	$(ROOT_DIR)include/
 # -_- Internal / Private include for my_printf = ./src/printf/private -_-
 MY_PRINTF_INCLUDE	=	$(ROOT_DIR)src/printf/private
 
-override CFLAGS	+=	-I$(INCLUDE) -I$(MY_PRINTF_INCLUDE) -g3 -Wall -Wextra -MMD -MP
+ARFLAGS	=	-rc
+
+CPPFLAGS    =   -I$(INCLUDE) -I$(MY_PRINTF_INCLUDE) -MMD -MP
+override CFLAGS	+=	 -g3 -Wall -Wextra
 
 OBJ_D	=	$(ROOT_DIR)obj/
 
@@ -30,13 +35,14 @@ FILE_D	=	$(SRC_D)file/
 MY_PRINTF_D	=	$(SRC_D)printf/
 LINKED_LISTS_D	=	$(SRC_D)linked_lists/
 HASHTABLE_D	=	$(SRC_D)hashtable/
+CONFIG_D	=	$(SRC_D)config/
 
 # -_- Directories located in $(STRING_D) = ./src/string/ -_-
 COMPARAISON_D	=	$(STRING_D)comparaison/
 CONVERT_D	=	$(STRING_D)convert/
 MANIPULATION_D	=	$(STRING_D)manipulation/
 SEARCH_D	=	$(STRING_D)search/
-STRING_ARRAY_D	=	$(STRING_D)string_array/
+STRING_ARRAY_D	=	$(STRING_D)array/
 
 # -_- Directories located in $(MY_PRINTF_D) = ./src/printf/ -_-
 MY_PRINTF_UTILS_D	=	$(MY_PRINTF_D)utils/
@@ -134,7 +140,7 @@ MY_PRINTF_UTILS_F	=	my_put_float_hex.c \
 						my_put_scientific.c \
 						my_put_adress.c
 
-# -_- Files located in $(MY_PRINTF_PARAM_D) = ./src/printf/src/parameters/ -_-
+# -_- Files located in $(MY_PRINTF_PARAM_D) = ./src/printf/parameters/ -_-
 MY_PRINTF_PARAM_F	=	parameter_int.c \
 						parameter_o.c \
 						parameter_x.c \
@@ -174,12 +180,15 @@ DOUBLE_LL_F	=	create.c	\
 
 # -_- Files located in $(HASHTABLE_D) = ./src/hashtable/ -_-
 HASHTABLE_F	=	create.c	\
+				bucket.c	\
 				insert.c	\
 				pop.c	\
 				get.c	\
 				dump.c	\
 				hash.c	\
 				destroy.c
+
+CONFIG_F	=	create.c
 
 # -_- Files located in $(SRC_D) = ./src/ -_-
 SRC	=	$(addprefix $(IO_D), $(IO_F)) 	\
@@ -198,65 +207,41 @@ SRC	=	$(addprefix $(IO_D), $(IO_F)) 	\
 		$(addprefix $(NODE_LL_D), $(NODE_LL_F))	\
 		$(addprefix $(SIMPLE_LL_D), $(SIMPLE_LL_F))	\
 		$(addprefix $(DOUBLE_LL_D), $(DOUBLE_LL_F))	\
-		$(addprefix $(HASHTABLE_D), $(HASHTABLE_F))
+		$(addprefix $(HASHTABLE_D), $(HASHTABLE_F))	\
+		$(addprefix $(CONFIG_D), $(CONFIG_F))
 
 # -_- puts all .c files wherever they come from into the bin folder as a .o -_-
 OBJ	=	$(SRC:$(SRC_D)%.c=$(OBJ_D)%.o)
 
 DEP	=	$(OBJ:.o=.d)
 
-##	## --__-- PROGRESS BAR LOGIC --__--
-##	TOTAL_FILES := $(words $(SRC))
-##	CUR_FILE := .cur_file
-##	BAR_WIDTH   := 40
-##
-##	define draw_bar
-##		@if [ ! -f $(CUR_FILE) ]; then echo 0 > $(CUR_FILE); fi
-##		@COUNT=$$(($$(cat $(CUR_FILE)) + 1)); \
-##		echo $$COUNT > $(CUR_FILE); \
-##		PERCENT=$$(($$COUNT * 100 / $(TOTAL_FILES))); \
-##		FILLED=$$(($$COUNT * $(BAR_WIDTH) / $(TOTAL_FILES))); \
-##		EMPTY=$$(($(BAR_WIDTH) - $$FILLED)); \
-##		printf "\r\033[1;36m[%3d%%]\033[0m \033[1;32m[" $$PERCENT; \
-##		printf '%.0s#' $$(seq 1 $$FILLED); \
-##		printf '%.0s-' $$(seq 1 $$EMPTY); \
-##		printf "]\033[0m Compiling: \033[0;33m%s\033[0m\033[K" "$$PERCENT" "$1"
-##	endef
+-include $(DEP)
 
 ## --__-- RULES --__--
 
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-	@ar -rc $@ $^
-#	@rm -f $(CUR_FILE)
+	@$(AR) $(ARFLAGS) $@ $^
 	@printf "\033[1;32m%s\033[0m\n" "Build Complete!"
 
-# -_- Creates the bin dir if non existent (only once) -_-
-$(OBJ_D):
-	@mkdir -p $@
-
 # -_- Compiles .o files into bin folder from all c files in the VPATH directories -_-
-$(OBJ_D)%.o:	$(SRC_D)%.c | $(OBJ_D)
+$(OBJ_D)%.o:	$(SRC_D)%.c
 	@mkdir -p $(dir $@)
-	@$(CC) -o $@ -c $< $(CFLAGS)
-#	$(call draw_bar, $<)
+	@$(CC) -o $@ -c $< $(CPPFLAGS) $(CFLAGS)
 
 clean:
 	@rm -rf $(OBJ_D)
-#	@rm -f $(CUR_FILE)
 	@printf "\033[1;31m%s\033[0m\n" "Objects cleaned."
 
 fclean: clean
 	@rm -f $(NAME)
 	@printf "\033[1;31m%s\033[0m\n" "Binary cleaned."
 
-re: fclean $(NAME)
+re: fclean all
 
 bestre:
-	$(MAKE) fclean
-	$(MAKE) -j$$(nproc)
-
--include $(DEP)
+	@$(MAKE) fclean --no-print-directory
+	@$(MAKE) -j$$(nproc) all --no-print-directory
 
 .PHONY:	all	clean	fclean	re	bestre

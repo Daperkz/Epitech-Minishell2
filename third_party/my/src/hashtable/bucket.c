@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 
+#include "my/string.h"
 #include "my/hashtable.h"
 
 ht_buckets_t *bucket_create(char *key, void *data)

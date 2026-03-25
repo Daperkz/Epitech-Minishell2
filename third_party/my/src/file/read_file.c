@@ -31,7 +31,7 @@ char *read_file(const char *filename)
 char *read_file_dyn(const char *filename)
 {
     int fd = open_file(filename);
-    int size = get_file_size(filename);
+    int size = get_file_size_dyn(filename);
     char *buffer = NULL;
 
     if (size < 0 || fd == -1) {

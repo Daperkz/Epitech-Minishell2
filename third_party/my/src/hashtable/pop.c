@@ -29,6 +29,7 @@ void *ht_pop(ht_t *ht, char *key)
     data = bucket_destroy(output);
     if (ht->buckets[index]->len == 0) {
         ll_destroy(ht->buckets[index], NULL);
+        ht->buckets[index] = NULL;
     }
     return (data);
 }

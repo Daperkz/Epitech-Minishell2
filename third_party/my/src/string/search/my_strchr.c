@@ -10,11 +10,14 @@
 // returns first occurence of the target char
 char *my_strchr(char *str, char target)
 {
+    if (!str)
+        return (NULL);
     while (*str) {
-        if (*str == target) {
-            return str;
-        }
+        if (*str == target)
+            return (str);
         str++;
     }
-    return NULL;
+    if (*str == target)
+        return (str);
+    return (NULL);
 }

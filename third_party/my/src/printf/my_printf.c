@@ -39,6 +39,8 @@ int my_printf(const char *format, ...)
     va_list args;
     int ret;
 
+    if (!format)
+        return (-1);
     va_start(args, format);
     ret = internal_printf(1, format, args);
     va_end(args);
@@ -50,6 +52,8 @@ int my_fprintf(int fd, const char *format, ...)
     va_list args;
     int ret;
 
+    if (!format)
+        return (-1);
     va_start(args, format);
     ret = internal_printf(fd, format, args);
     va_end(args);
@@ -98,6 +102,14 @@ int my_sprintf(char **str_ptr, char *format, ...)
     va_list args;
     int ret;
 
+    if (!str_ptr)
+        return (-1);
+    if (!(*str_ptr)) {
+        *str_ptr = malloc(sizeof(char) * 1);
+        if (!*str_ptr)
+            return (-1);
+        *str_ptr[0] = '\0';
+    }
     va_start(args, format);
     ret = internal_sprintf(str_ptr, format, args);
     va_end(args);

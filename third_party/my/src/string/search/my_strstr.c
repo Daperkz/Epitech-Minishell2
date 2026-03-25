@@ -69,8 +69,8 @@ static char *compute(char *str, int n, char const *pattern, int m)
             j--;
         if (j < 0)
             return &str[i];
-        i += MAX(good_suffix[i],
-            bad_char[(unsigned char)str[i + j]] - m + 1 + j);
+        i += MAX(good_suffix[j],
+            bad_char[(unsigned char)str[i + j]] - (m - 1 - j));
     }
     return NULL;
 }
