@@ -46,6 +46,8 @@ int file_error(shell_t *shell, char *file)
 
 static int io_check(shell_t *shell, int i, int has_io, char *err)
 {
+    if (i == 0)
+        return (ambiguous_error(shell, REDIR_INVALID_COMMAND));
     if (!is_valid(shell->input_array[i + 1]))
         return validity_error(shell);
     if (has_io >= 2) {

@@ -40,7 +40,8 @@
     #define ROAT ">>" //redirection out append type
     #define RIT "<" //redirection in type
     #define RHT "<<" //redirection heredoc type
-    #define REDIR_MSSING_NAME_ERR "Missing name for redirect\n"
+    #define REDIR_INVALID_COMMAND "Invalid null command.\n"
+    #define REDIR_MSSING_NAME_ERR "Missing name for redirect.\n"
     #define REDIR_AMBIGUOUS_OUT_ERR "Ambiguous output redirect.\n"
     #define REDIR_AMBIGUOUS_IN_ERR "Ambiguous input redirect.\n"
     #define REDIR_HEREDOC_TMP_FILE "/tmp/.heredoc_tmp"
