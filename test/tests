@@ -1,0 +1,932 @@
+[1]
+NAME="Simple ls"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=echo 'ls'
+[1-END]
+
+[2]
+NAME="Empty lines and tabs"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=echo ''²echo '     '²echo -e '\t\t'²echo 'ls'
+[2-END]
+
+[3]
+NAME="Path execution (/bin/ls)"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=echo '/bin/ls'
+[3-END]
+
+[4]
+NAME="Invalid command (Command not found)"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=echo 'nonexistent_cmd'
+[4-END]
+
+[5]
+NAME="Setenv and Env check"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=echo 'setenv TEST_VAR "coding"'²echo 'env'²echo 'unsetenv TEST_VAR'²echo 'env'
+[5-END]
+
+[6]
+NAME="CD Basic"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'; mkdir -p test_dir"
+CLEAN="rm -rf test_dir"
+TESTS=echo 'cd test_dir'²echo 'pwd'²echo 'cd ..'²echo 'pwd'
+[6-END]
+
+[7]
+NAME="CD Home (no args)"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'; export HOME=/tmp"
+CLEAN=""
+TESTS=echo 'cd'²echo 'pwd'
+[7-END]
+
+[8]
+NAME="Exit status - Success"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=echo 'ls /'²echo 'exit'
+[8-END]
+
+[9]
+NAME="Exit status - Error"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=echo 'ls nonexistent_file'²echo 'exit'
+[9-END]
+
+[10]
+NAME="Segmentation Fault"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'; gcc -o segfault_gen -e main -nostdlib"
+CLEAN="rm -f segfault_gen"
+TESTS=echo './segfault_gen'
+[10-END]
+
+[11]
+NAME="Floating point exception"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'; echo 'int main(){int a=1/0;}' > fpe.c; gcc -o fpe fpe.c"
+CLEAN="rm -f fpe fpe.c"
+TESTS=echo './fpe'
+[11-END]
+
+[12]
+NAME="Complex PATH search"
+SETUP="export TERM=xterm; mkdir -p folder1 folder2; cp /bin/ls folder2/my_ls; PATH='$PWD/folder1:$PWD/folder2'"
+CLEAN="rm -rf folder1 folder2"
+TESTS=echo 'my_ls'
+[12-END]
+
+[13]
+NAME="Exit with specific code"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=echo 'exit 42'
+[13-END]
+
+[14]
+NAME="Setenv - Too many arguments"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=echo 'setenv VAR VAL EXTRA'
+[14-END]
+
+[15]
+NAME="Setenv - Invalid name (starts with digit)"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=echo 'setenv 123VAR value'
+[15-END]
+
+[16]
+NAME="Setenv - Invalid name (non-alphanumeric)"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=echo 'setenv VAR?VAL value'
+[16-END]
+
+[17]
+NAME="Unsetenv - Too few arguments"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=echo 'unsetenv'
+[17-END]
+
+[18]
+NAME="CD - Too many arguments"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=echo 'cd /tmp /etc'
+[18-END]
+
+[19]
+NAME="CD - Non-existent directory"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=echo 'cd /path/that/does/not/exist'
+[19-END]
+
+[20]
+NAME="CD - Not a directory (file instead)"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'; touch not_a_dir"
+CLEAN="rm -f not_a_dir"
+TESTS=echo 'cd not_a_dir'
+[20-END]
+
+[21]
+NAME="CD - No permissions"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'; mkdir no_perms; chmod 000 no_perms"
+CLEAN="rm -rf no_perms"
+TESTS=echo 'cd no_perms'
+[21-END]
+
+[22]
+NAME="PATH - Command is a directory"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'; mkdir my_dir"
+CLEAN="rm -rf my_dir"
+TESTS=echo './my_dir'
+[22-END]
+
+[23]
+NAME="PATH - Empty PATH variable"
+SETUP="export TERM=xterm; unset PATH"
+CLEAN=""
+TESTS=echo 'ls'
+[23-END]
+
+[24]
+NAME="Permission Denied on execution"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'; touch script; chmod 644 script"
+CLEAN="rm -f script"
+TESTS=echo './script'
+[24-END]
+
+[25]
+NAME="Multiple Unsetenv"
+SETUP="export TERM=xterm; PATH='/bin:/usr/bin'; export A=1; export B=2; export C=3"
+CLEAN=""
+TESTS=echo 'unsetenv A B C'²echo 'env'
+[25-END]
+
+[26]
+NAME="Setenv - Update existing variable"
+SETUP="export TERM=xterm; export VAR=old"
+CLEAN=""
+TESTS=echo 'setenv VAR new'²echo 'env | grep VAR'
+[26-END]
+
+[27]
+NAME="Setenv - Empty value"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'setenv EMPTY_VAR'²echo 'env | grep EMPTY_VAR'
+[27-END]
+
+[28]
+NAME="Unsetenv - Variable that does not exist"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'unsetenv NON_EXISTENT'²echo 'env'
+[28-END]
+
+[29]
+NAME="Unsetenv - Wildcard simulation (not supported, should not crash)"
+SETUP="export TERM=xterm; export TEST1=a; export TEST2=b"
+CLEAN=""
+TESTS=echo 'unsetenv TEST*'²echo 'env | grep TEST'
+[29-END]
+
+[30]
+NAME="Setenv - Massive value string"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'setenv BIG abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'²echo 'env | grep BIG'
+[30-END]
+
+[31]
+NAME="Setenv - Alphanumeric names"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'setenv VAR123 val'²echo 'env | grep VAR123'
+[31-END]
+
+[32]
+NAME="Env - Run multiple times"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'env'²echo 'env'²echo 'env'
+[32-END]
+
+[33]
+NAME="Setenv - Replace PATH"
+SETUP="export TERM=xterm; PATH='/bin'"
+CLEAN=""
+TESTS=echo 'setenv PATH /usr/bin'²echo 'ls'
+[33-END]
+
+[34]
+NAME="Unsetenv - PATH removal"
+SETUP="export TERM=xterm; PATH='/bin'"
+CLEAN=""
+TESTS=echo 'unsetenv PATH'²echo 'ls'
+[34-END]
+
+[35]
+NAME="Setenv - Variable name with underscores"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'setenv MY_VAR value'²echo 'env | grep MY_VAR'
+[35-END]
+
+[36]
+NAME="Setenv - Overwrite PATH with empty"
+SETUP="export TERM=xterm; PATH='/bin'"
+CLEAN=""
+TESTS=echo 'setenv PATH'²echo 'ls'
+[36-END]
+
+[37]
+NAME="Unsetenv - Multiple non-existent"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'unsetenv NO1 NO2 NO3'
+[37-END]
+
+[38]
+NAME="Setenv - Value with internal spaces (TCSH handling)"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'setenv VAR "space test"'²echo 'env | grep VAR'
+[38-END]
+
+[39]
+NAME="Setenv - Mix of letters and numbers"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'setenv Var123abc 456'
+[39-END]
+
+[40]
+NAME="Unsetenv - Case sensitivity check"
+SETUP="export TERM=xterm; export test=1"
+CLEAN=""
+TESTS=echo 'unsetenv TEST'²echo 'env | grep test'
+[40-END]
+
+[41]
+NAME="Setenv - Special chars in value (Allowed)"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'setenv VAR /usr/bin:/bin:.'
+[41-END]
+
+[42]
+NAME="Setenv - Variable '?' name check"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'setenv ? val'
+[42-END]
+
+[43]
+NAME="Setenv - Re-setting PWD manually"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'setenv PWD /tmp'²echo 'pwd'
+[43-END]
+
+[44]
+NAME="Setenv - Set value to 0"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'setenv VAR 0'
+[44-END]
+
+[45]
+NAME="Env - Large environment stress"
+SETUP="for i in {1..50}; do export VAR$i=$i; done"
+CLEAN=""
+TESTS=echo 'env'
+[45-END]
+
+[46]
+NAME="CD - Dot"
+SETUP="export TERM=xterm; PATH='/bin'"
+CLEAN=""
+TESTS=echo 'cd .'²echo 'pwd'
+[46-END]
+
+[47]
+NAME="CD - Dot Dot"
+SETUP="export TERM=xterm; PATH='/bin'; mkdir -p a/b/c"
+CLEAN="rm -rf a"
+TESTS=echo 'cd a/b/c'²echo 'cd ..'²echo 'pwd'
+[47-END]
+
+[48]
+NAME="CD - Very deep path"
+SETUP="export TERM=xterm; mkdir -p 1/2/3/4/5/6/7/8/9"
+CLEAN="rm -rf 1"
+TESTS=echo 'cd 1/2/3/4/5/6/7/8/9'²echo 'pwd'
+[48-END]
+
+[49]
+NAME="CD - Absolute path"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'cd /tmp'²echo 'pwd'
+[49-END]
+
+[50]
+NAME="CD - Hyphen (OLDPWD)"
+SETUP="export TERM=xterm; mkdir -p dir1 dir2"
+CLEAN="rm -rf dir1 dir2"
+TESTS=echo 'cd dir1'²echo 'cd ../dir2'²echo 'cd -'²echo 'pwd'
+[50-END]
+
+[51]
+NAME="CD - Into hidden directory"
+SETUP="export TERM=xterm; mkdir .hidden"
+CLEAN="rm -rf .hidden"
+TESTS=echo 'cd .hidden'²echo 'pwd'
+[51-END]
+
+[52]
+NAME="CD - To / (Root)"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'cd /'²echo 'pwd'
+[52-END]
+
+[53]
+NAME="CD - To multiple slashes /////"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'cd /////tmp'²echo 'pwd'
+[53-END]
+
+[54]
+NAME="CD - Relative up and down"
+SETUP="export TERM=xterm; mkdir -p a/b"
+CLEAN="rm -rf a"
+TESTS=echo 'cd a'²echo 'cd ../a/b'²echo 'pwd'
+[54-END]
+
+[55]
+NAME="CD - To a symlink directory"
+SETUP="export TERM=xterm; mkdir real_dir; ln -s real_dir link_dir"
+CLEAN="rm -rf real_dir link_dir"
+TESTS=echo 'cd link_dir'²echo 'pwd'
+[55-END]
+
+[56]
+NAME="CD - Permission denied on parent"
+SETUP="export TERM=xterm; mkdir -p a/b; chmod 000 a"
+CLEAN="chmod 755 a; rm -rf a"
+TESTS=echo 'cd a/b'
+[56-END]
+
+[57]
+NAME="CD - Path with many . and .."
+SETUP="export TERM=xterm; mkdir -p a/b"
+CLEAN="rm -rf a"
+TESTS=echo 'cd ./a/./../a/b/.'²echo 'pwd'
+[57-END]
+
+[58]
+NAME="CD - Unset OLDPWD then cd -"
+SETUP="export TERM=xterm; unset OLDPWD"
+CLEAN=""
+TESTS=echo 'cd -'
+[58-END]
+
+[59]
+NAME="CD - Home with no HOME variable"
+SETUP="export TERM=xterm; unset HOME"
+CLEAN=""
+TESTS=echo 'cd'
+[59-END]
+
+[60]
+NAME="CD - Variable as path"
+SETUP="export TERM=xterm; export MYPATH=/tmp"
+CLEAN=""
+TESTS=echo 'cd $MYPATH'
+[60-END]
+
+[61]
+NAME="CD - Tab in path name"
+SETUP="export TERM=xterm; mkdir 'dir	tab'"
+CLEAN="rm -rf 'dir	tab'"
+TESTS=echo -e "cd dir\ttab"²echo 'pwd'
+[61-END]
+
+[62]
+NAME="CD - Non-existent hyphen path"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'cd -nonexistent'
+[62-END]
+
+[63]
+NAME="CD - Empty string path"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'cd ""'
+[63-END]
+
+[64]
+NAME="CD - Move to deleted directory"
+SETUP="export TERM=xterm; mkdir temp_del; cd temp_del; rmdir ../temp_del"
+CLEAN=""
+TESTS=echo 'pwd'²echo 'ls'
+[64-END]
+
+[65]
+NAME="CD - Path too long"
+SETUP="export TERM=xterm; LONG=$(printf 'a/%.0s' {1..1000}); mkdir -p $LONG"
+CLEAN="rm -rf a"
+TESTS=echo "cd $LONG"
+[65-END]
+
+[66]
+NAME="Spaces - Leading and Trailing"
+SETUP="export TERM=xterm; PATH='/bin'"
+CLEAN=""
+TESTS=echo '    ls     '
+[66-END]
+
+[67]
+NAME="Tabs - In between arguments"
+SETUP="export TERM=xterm; PATH='/bin'"
+CLEAN=""
+TESTS=echo -e 'ls\t-l\t\t/tmp'
+[67-END]
+
+[68]
+NAME="Mixing Spaces and Tabs"
+SETUP="export TERM=xterm; PATH='/bin'"
+CLEAN=""
+TESTS=echo -e '  \t  ls  \t  -la  '
+[68-END]
+
+[69]
+NAME="Null bytes / special chars (Non-crashing)"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo -e 'ls\0ls'
+[69-END]
+
+[70]
+NAME="Multi-line input simulation"
+SETUP="export TERM=xterm; PATH='/bin'"
+CLEAN=""
+TESTS=echo 'ls'²echo 'pwd'²echo 'whoami'
+[70-END]
+
+[71]
+NAME="Mixed separators - Space/Tab/Newline"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo -e "ls \t \n \t -la"
+[71-END]
+
+[72]
+NAME="Command with 100 arguments"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo "echo $(printf 'arg%.0s ' {1..100})"
+[72-END]
+
+[73]
+NAME="Input - Only semicolons (If supported later)"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo ';;;;;;'
+[73-END]
+
+[74]
+NAME="Input - Very long line (8096 chars)"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo "echo $(printf 'a%.0s' {1..8096})"
+[74-END]
+
+[75]
+NAME="Parsing - Argument with quotes (Basic check)"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'ls "folder with spaces"'
+[75-END]
+
+[76]
+NAME="Logic - Executing current directory (.)"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo '.'
+[76-END]
+
+[77]
+NAME="Logic - Executing parent directory (..)"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo '..'
+[77-END]
+
+[78]
+NAME="Parsing - Single char commands"
+SETUP="export TERM=xterm; echo 'echo h' > a; chmod +x a; PATH='.'"
+CLEAN="rm a"
+TESTS=echo 'a'
+[78-END]
+
+[79]
+NAME="Parsing - Non-printable characters"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo -e "\x01\x02\x03"
+[79-END]
+
+[80]
+NAME="Logic - Multiple empty commands"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo ''²echo ''²echo ''
+[80-END]
+
+[81]
+NAME="Path - PATH with double colons ::"
+SETUP="export TERM=xterm; PATH='/bin::/usr/bin'"
+CLEAN=""
+TESTS=echo 'ls'
+[81-END]
+
+[82]
+NAME="Path - PATH with only colons"
+SETUP="export TERM=xterm; PATH='::::'"
+CLEAN=""
+TESTS=echo 'ls'
+[82-END]
+
+[83]
+NAME="Exit - Large status wrap (Negative)"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'exit -42'
+[83-END]
+
+[84]
+NAME="Env - Unsetenv PATH then setenv PATH"
+SETUP="export TERM=xterm; export PATH=/bin"
+CLEAN=""
+TESTS=echo 'unsetenv PATH'²echo 'setenv PATH /bin'²echo 'ls'
+[84-END]
+
+[85]
+NAME="Signal - Child ignored SIGINT"
+SETUP="export TERM=xterm; echo 'while true; do sleep 1; done' > ignore.sh; chmod +x ignore.sh"
+CLEAN="rm ignore.sh"
+TESTS=echo './ignore.sh'
+[85-END]
+
+[86]
+NAME="Execution - Busy binary"
+SETUP="export TERM=xterm; PATH='/bin'"
+CLEAN=""
+TESTS=echo 'sleep 1'
+[86-END]
+
+[87]
+NAME="Execution - Redirect test (though not in MS1, checking for crashes)"
+SETUP="export TERM=xterm; PATH='/bin'"
+CLEAN=""
+TESTS=echo 'ls > /dev/null'
+[87-END]
+
+[88]
+NAME="Signal - Kill child from outside"
+SETUP="export TERM=xterm; PATH='/bin'; (sleep 1 && killall -SIGSEGV mysh) &"
+CLEAN=""
+TESTS=echo 'sleep 2'
+[88-END]
+
+[89]
+NAME="Exit - Non-numeric arg"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'exit abc'
+[89-END]
+
+[90]
+NAME="Exit - Too many args"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'exit 1 2 3'
+[90-END]
+
+[91]
+NAME="Path - Command name is a space"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo ' '
+[91-END]
+
+[92]
+NAME="Binary without read permissions"
+SETUP="export TERM=xterm; touch no_read; chmod 000 no_read"
+CLEAN="rm -f no_read"
+TESTS=echo './no_read'
+[92-END]
+
+[93]
+NAME="Binary is actually a script without shebang"
+SETUP="export TERM=xterm; echo 'echo hello' > myscript; chmod +x myscript"
+CLEAN="rm -f myscript"
+TESTS=echo './myscript'
+[93-END]
+
+[94]
+NAME="Deep Path Search - PATH starts with colon"
+SETUP="export TERM=xterm; PATH=':/bin'"
+CLEAN=""
+TESTS=echo 'ls'
+[94-END]
+
+[95]
+NAME="Deep Path Search - PATH ends with colon"
+SETUP="export TERM=xterm; PATH='/bin:'"
+CLEAN=""
+TESTS=echo 'ls'
+[95-END]
+
+[96]
+NAME="Exit - Large status code wrap"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'exit 257'
+[96-END]
+
+[97]
+NAME="Exit - Negative status code"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'exit -1'
+[97-END]
+
+[98]
+NAME="Env - Unset HOME then CD"
+SETUP="export TERM=xterm; unset HOME"
+CLEAN=""
+TESTS=echo 'cd'
+[98-END]
+
+[99]
+NAME="Path - Relative path execution"
+SETUP="export TERM=xterm; cp /bin/ls .; PATH=''"
+CLEAN="rm -f ls"
+TESTS=echo './ls'
+[99-END]
+
+[100]
+NAME="Final Stress - Massive command loop"
+SETUP="export TERM=xterm; PATH='/bin'"
+CLEAN=""
+TESTS=$(for i in {1..20}; do echo -n "echo $i²"; done)
+[100-END]
+
+[101]
+NAME="Setenv - Value with '=' character"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'setenv VAR "key=value"'²echo 'env | grep VAR'
+[101-END]
+
+[102]
+NAME="Setenv - Empty name error"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'setenv "" value'
+[102-END]
+
+[103]
+NAME="Unsetenv - Remove all variables"
+SETUP="export TERM=xterm; export A=1; export B=2"
+CLEAN=""
+TESTS=echo 'unsetenv A'²echo 'unsetenv B'²echo 'env'
+[103-END]
+
+[104]
+NAME="Setenv - Deep recursion/Overwrite loop"
+SETUP="export TERM=xterm; export VAR=initial"
+CLEAN=""
+TESTS=echo 'setenv VAR 1'²echo 'setenv VAR 2'²echo 'setenv VAR 3'²echo 'env | grep VAR'
+[104-END]
+
+[105]
+NAME="CD - Sync PWD and OLDPWD"
+SETUP="export TERM=xterm; mkdir -p dir_a dir_b"
+CLEAN="rm -rf dir_a dir_b"
+TESTS=echo 'cd dir_a'²echo 'env | grep PWD'²echo 'cd ../dir_b'²echo 'env | grep OLDPWD'
+[105-END]
+
+[106]
+NAME="CD - Path with spaces (Quoted)"
+SETUP="export TERM=xterm; mkdir 'my folder'"
+CLEAN="rm -rf 'my folder'"
+TESTS=echo 'cd "my folder"'²echo 'pwd'
+[106-END]
+
+[107]
+NAME="CD - Move to root and go up"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo 'cd /'²echo 'cd ..'²echo 'cd ..'²echo 'pwd'
+[107-END]
+
+[108]
+NAME="Signal - Abort (SIGABRT)"
+SETUP="export TERM=xterm; echo 'parent: giving SIGABRT'; echo '#include <stdlib.h> \n int main(){abort();}' > abort.c; gcc abort.c -o abort_me"
+CLEAN="rm abort.c abort_me"
+TESTS=echo './abort_me'
+[108-END]
+
+[109]
+NAME="Signal - Bus Error (SIGBUS)"
+SETUP="export TERM=xterm; echo 'int main(){return 0;}' > bus.c; gcc bus.c -o bus_me"
+CLEAN="rm -f bus.c bus_me"
+TESTS=echo './bus_me &'²echo 'kill -BUS %1'
+[109-END]
+
+[110]
+NAME="Signal - Segfault with Core Dump check"
+SETUP="export TERM=xterm;"
+CLEAN=""
+TESTS= echo './my_segfault'
+[110-END]
+
+[111]
+NAME="Path - Leading colons (Current Directory)"
+SETUP="export TERM=xterm; export PATH=':/usr/bin:/bin'; echo 'echo success' > test_cmd; chmod +x test_cmd"
+CLEAN="rm test_cmd"
+TESTS=echo 'test_cmd'
+[111-END]
+
+[112]
+NAME="Parsing - Command name is a Tab"
+SETUP="export TERM=xterm"
+CLEAN=""
+TESTS=echo -e "\t"
+[112-END]
+
+[113]
+NAME="Parsing - Multiple Separators (Mixed)"
+SETUP="export TERM=xterm; PATH='/bin'"
+CLEAN=""
+TESTS=echo -e "   \t   ls   \t\t   /tmp   "
+[113-END]
+
+[901]
+NAME="Nothing"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo ''
+[901-END]
+
+[902]
+NAME="Exec two command"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'ls /etc'
+  echo 'cat /etc/resolv.conf'
+[902-END]
+
+[903]
+NAME="Testing with /usr/bin PATH"
+SETUP="export TERM=xterm ; PATH='/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'pwd'
+[903-END]
+
+[904]
+NAME="Testing with /bin PATH"
+SETUP="export TERM=xterm ; PATH='/bin'"
+CLEAN=""
+TESTS=
+  echo 'pwd'
+[904-END]
+
+[905]
+NAME="run commands"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'cat /etc/resolv.conf'
+  sleep 0.5
+  echo 'ls -l /etc'
+  sleep 0.5
+  echo 'pwd'
+[905-END]
+
+[906]
+NAME="setenv and unsetenv"
+SETUP="/usr/bin/env > .lstenv ; while read varenv ; do unset $varenv ; done < <(/bin/cat .lstenv | /usr/bin/cut -f1 -d=) ; export PATH=/bin:/usr/bin ; export _=ls ; export LS_COLORS=RID ; export MYBG=4 ; export LVL=4 ; export NOTE=2"
+CLEAN="while read varenv ; do export "$varenv" 2>/dev/null ; done  < <(/bin/cat .lstenv) ; /bin/rm -f .lstenv"
+TESTS=
+  echo 'unsetenv HOSTTYPE'
+  echo 'unsetenv VENDOR'
+  echo 'unsetenv OSTYPE'
+  echo 'unsetenv MACHTYPE'
+  echo 'unsetenv SHLVL'
+  echo 'unsetenv PWD'
+  echo 'unsetenv LOGNAME'
+  echo 'unsetenv USER'
+  echo 'unsetenv GROUP'
+  echo 'unsetenv HOST'
+  echo 'unsetenv REMOTEHOST'
+  echo 'unsetenv _'
+  echo 'unsetenv LS_COLORS'
+  echo 'unsetenv NOTE'
+  echo 'setenv titi'
+  echo 'setenv tata coucou'
+  echo 'env'
+  echo '/usr/bin/env'
+  echo 'setenv var1 val1'
+  echo 'setenv var2 val2'
+[906-END]
+
+[907]
+NAME="builtin cd"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'cd ..'
+  echo 'ls -l'
+  echo 'cd /usr'
+  echo 'ls -l'
+[907-END]
+
+[908]
+NAME="many tab and space"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo -e "\t\t    ls\t     \t-l    \t\t  \t -a /usr   \t\t"
+[908-END]
+
+[909]
+NAME="Launch DivZero program with core dump"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "./my_divzero"
+[909-END]
+
+[910]
+NAME="execute multiple command and a pipe"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "ls -l; ls -l | wc -l"
+[910-END]
+
+[911]
+NAME="execute multiple command, pipe and redirection"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "mkdir test_tmp ; cd test_tmp ; ls -a ; ls | cat | wc -c > tutu ; cat tutu"
+  echo "cd ../ ; rm -rf test_tmp"
+[911-END]
+
+[912]
+NAME="redirection hell"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "ls < test/tests >> output.txt > output.txt -a"
+[912-END]
+
+[913]
+NAME="Nothing pipe"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "|"
+[913-END]
+
+[914]
+NAME="builtin pipe"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "mkdir testf"
+  echo "ls | cd testf"
+  echo "rm -rf testf"
+[914-END]
