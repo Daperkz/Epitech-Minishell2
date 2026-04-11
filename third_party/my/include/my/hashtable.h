@@ -8,7 +8,7 @@
 #ifndef HASHTABLE_H
     #define HASHTABLE_H
 
-    #include "linked_lists/simple_linked_list.h"
+    #include "graph/simple_linked_list.h"
 
 typedef struct ht_buckets_s {
     char *key;

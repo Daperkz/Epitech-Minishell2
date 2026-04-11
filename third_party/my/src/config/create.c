@@ -9,19 +9,35 @@
 
 #include "my/file.h"
 #include "my/config.h"
+#include "my/string.h"
+
+static int clean_line(char **line_p)
+{
+    *line_p = my_strtrim(*line_p, WHITESPACES);
+    if (*(*line_p) == '#' || *(*line_p) == ';' || !(*(*line_p)))
+        return (1);
+    *line_p = my_strtrim(*line_p, WHITESPACES);
+    if (!my_strchr(*line_p, '='))
+        return (1);
+    return (EXIT_SUCCESS);
+}
 
 static int process_line(config_t *config, char *line)
 {
     char *key = NULL;
     char *value = NULL;
 
-    if (!line || *line == '#' || *line == ';' || *line == '\0')
+    if (!line)
+        return (EXIT_SUCCESS);
+    if (clean_line(&line) == 1)
         return (EXIT_SUCCESS);
     key = my_strsep(&line, "=");
     value = my_strdup(line);
     if (!value)
         return (EXIT_FAILURE);
     if (key && value) {
+        key = my_strtrim(key, WHITESPACES);
+        value = my_strtrim(value, WHITESPACES);
         if (ht_insert(config, key, value) == EXIT_FAILURE)
             return (EXIT_FAILURE);
     }
@@ -57,8 +73,8 @@ config_t *config_create(char const *filepath, int size)
         return (NULL);
     }
     if (parse_file(config, file) == EXIT_FAILURE) {
-        ht_destroy(config, NULL);
         free(file);
+        ht_destroy(config, NULL);
         return (NULL);
     }
     free(file);

@@ -14,17 +14,13 @@ char *get_file_content(int fd, long size)
 {
     char *buffer = malloc(sizeof(char) * (size + 1));
 
-    if (!buffer) {
-        perror("Error malloc");
-        close(fd);
-        return NULL;
-    }
+    if (!buffer)
+        return (NULL);
     if (read(fd, buffer, size) != size) {
         perror("Error read");
-        close(fd);
         free(buffer);
-        return NULL;
+        return (NULL);
     }
     buffer[size] = '\0';
-    return buffer;
+    return (buffer);
 }

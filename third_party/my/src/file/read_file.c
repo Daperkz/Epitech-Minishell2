@@ -14,32 +14,42 @@
 char *read_file(const char *filename)
 {
     int fd = open_file(filename);
-    int size = get_file_size(filename);
+    long size = get_file_size(filename);
     char *buffer = NULL;
 
-    if (size < 0 || fd == -1) {
-        return NULL;
+    if (fd == -1)
+        return (NULL);
+    if (size == -1) {
+        close(fd);
+        return (NULL);
     }
     buffer = get_file_content(fd, size);
-    if (!buffer)
-        return NULL;
+    if (!buffer) {
+        close(fd);
+        return (NULL);
+    }
     close(fd);
-    return buffer;
+    return (buffer);
 }
 
 // opens said file returns it's content inside of a buffer (no stat)
 char *read_file_dyn(const char *filename)
 {
     int fd = open_file(filename);
-    int size = get_file_size_dyn(filename);
+    long size = get_file_size_dyn(filename);
     char *buffer = NULL;
 
-    if (size < 0 || fd == -1) {
-        return NULL;
+    if (fd == -1)
+        return (NULL);
+    if (size == -1) {
+        close(fd);
+        return (NULL);
     }
     buffer = get_file_content(fd, size);
-    if (!buffer)
-        return NULL;
+    if (!buffer) {
+        close(fd);
+        return (NULL);
+    }
     close(fd);
-    return buffer;
+    return (buffer);
 }

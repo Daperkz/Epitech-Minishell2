@@ -19,15 +19,15 @@ int my_show_word_array(char **tab)
 
     if (!tab)
         return (EXIT_FAILURE);
-    while (tab[count] != 0) {
+    while (tab[count] != 0)
         count++;
-    }
-    if (count == 0 && tab[count] == 0) {
+    if (count == 0 && tab[count] == 0)
         return (EXIT_SUCCESS);
-    }
     str = concat_params(count, tab);
-    my_strcat(str, "\n");
+    if (!str)
+        return (EXIT_FAILURE);
     my_putstr(str);
+    my_putstr("\n");
     free(str);
     return (EXIT_SUCCESS);
 }

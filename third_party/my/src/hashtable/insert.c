@@ -10,7 +10,7 @@
 #include "my/string.h"
 
 #include "my/hashtable.h"
-#include "my/linked_lists/simple_linked_list.h"
+#include "my/graph/simple_linked_list.h"
 
 static int compare_keys(void *data, void *ref)
 {

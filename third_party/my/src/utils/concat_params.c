@@ -16,19 +16,17 @@ char *concat_params(int argc, char **argv)
     int total_len = 0;
     int i = 0;
 
-    for (i = 0; i < argc; i++) {
-        total_len += my_strlen(argv[i]);
-    }
+    for (i = 0; i < argc; i++)
+        total_len += my_strlen(argv[i]) + 1;
     str = malloc(total_len + 1);
-    my_strcat(str, "");
-    i = 0;
-    while (i < argc) {
+    if (!str)
+        return (NULL);
+    str[0] = '\0';
+    for (int i = 0; i < argc; i++) {
         my_strcat(str, argv[i]);
-        if (i != argc - 1) {
+        if (i != argc - 1)
             my_strcat(str, "\n");
-        }
-        i++;
     }
-    my_strcat(str, "\0");
-    return &str[0];
+    my_strcat(str, "");
+    return (str);
 }

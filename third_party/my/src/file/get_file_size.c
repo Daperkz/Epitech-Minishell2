@@ -17,7 +17,7 @@ long get_file_size(const char *filename)
     struct stat st;
 
     if (stat(filename, &st) != 0)
-        return -1;
+        return (-1);
     return st.st_size;
 }
 
@@ -30,11 +30,13 @@ long get_file_size_dyn(const char *filename)
     long n = 1;
 
     if (fd == -1)
-        return -1;
+        return (-1);
     while (n > 0) {
         n = read(fd, buff, 512);
         size += n;
     }
     close(fd);
-    return size;
+    if (n == -1)
+        return (-1);
+    return (size);
 }

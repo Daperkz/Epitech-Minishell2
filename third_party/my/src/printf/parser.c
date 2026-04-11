@@ -80,7 +80,7 @@ static int printf_or_sprintf(pf_ctx_t *ctx, char *res, char **str_ptr)
     int written;
 
     if (ctx->fd != -1) {
-        written = my_putstr_fd(ctx->fd, res);
+        written = my_fputstr(ctx->fd, res);
         ctx->count += (written != -1) ? written : 0;
         ctx->error = (written == -1);
     } else {

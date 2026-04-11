@@ -19,8 +19,8 @@ MY_PRINTF_INCLUDE	=	$(ROOT_DIR)src/printf/private
 
 ARFLAGS	=	-rc
 
-CPPFLAGS    =   -I$(INCLUDE) -I$(MY_PRINTF_INCLUDE) -MMD -MP
-override CFLAGS	+=	 -g3 -Wall -Wextra
+CPPFLAGS    =   -I$(INCLUDE) -I$(MY_PRINTF_INCLUDE) -g3
+override CFLAGS	+=	-Wall -Wextra
 
 OBJ_D	=	$(ROOT_DIR)obj/
 
@@ -33,7 +33,7 @@ MATH_D	=	$(SRC_D)math/
 UTILS_D	=	$(SRC_D)utils/
 FILE_D	=	$(SRC_D)file/
 MY_PRINTF_D	=	$(SRC_D)printf/
-LINKED_LISTS_D	=	$(SRC_D)linked_lists/
+GRAPH_D	=	$(SRC_D)graph/
 HASHTABLE_D	=	$(SRC_D)hashtable/
 CONFIG_D	=	$(SRC_D)config/
 
@@ -49,10 +49,11 @@ MY_PRINTF_UTILS_D	=	$(MY_PRINTF_D)utils/
 MY_PRINTF_PARAM_D	=	$(MY_PRINTF_D)parameters/
 MY_PRINTF_MODIFIER_D	=	$(MY_PRINTF_D)modifiers/
 
-# -_- Directories located in $(LINKED_LISTS_D) = ./src/linked_lists/ -_-
-NODE_LL_D	=	$(LINKED_LISTS_D)node/
-SIMPLE_LL_D	=	$(LINKED_LISTS_D)simple/
-DOUBLE_LL_D	=	$(LINKED_LISTS_D)double/
+# -_- Directories located in $(GRAPH_D) = ./src/graph/ -_-
+NODE_D	=	$(GRAPH_D)node/
+SIMPLE_GRAPH_D	=	$(GRAPH_D)simple/
+DOUBLE_GRAPH_D	=	$(GRAPH_D)double/
+BINARY_GRAPH_D	=	$(GRAPH_D)binary/
 
 
 # -_- Files located in $(IO_D) = ./src/io/ -_-
@@ -64,7 +65,7 @@ IO_F	=	my_putchar.c	\
 			my_show_word_array.c
 
 # -_- Files located in $(STRING_D) = ./src/string/ -_-
-STRING_F	=	
+STRING_F	=
 
 # -_- Files located in $(COMPARAISON_D) = ./src/string/comparaison/ -_-
 COMPARAISON_F	=	my_str_isalpha.c	\
@@ -88,7 +89,8 @@ MANIPULATION_F	=	my_putstr.c	\
 					my_strdup.c	\
 					my_strlen.c	\
 					my_strlowcase.c	\
-					my_strupcase.c
+					my_strupcase.c	\
+					my_strtrim.c
 
 # -_- Files located in $(SEARCH_D) = ./src/string/search/ -_-
 SEARCH_F	=	my_strchr.c	\
@@ -158,25 +160,30 @@ MY_PRINTF_MODIFIER_F	=	precision.c \
 							signs.c	\
 							sharp.c
 
-# -_- Files located in $(NODE_LL_D) = ./src/linked_lists/node/ -_-
-NODE_LL_F	=	create.c	\
+# -_- Files located in $(NODE_D) = ./src/graph/node/ -_-
+NODE_F	=	create.c	\
 				destroy.c
-
-# -_- Files located in $(SIMPLE_LL_D) = ./src/linked_lists/simple/ -_-
-SIMPLE_LL_F	=	create.c	\
+# -_- Files located in $(SIMPLE_GRAPH_D) = ./src/graph/simple/ -_-
+SIMPLE_GRAPH_F	=	create.c	\
 				add.c	\
 				get.c	\
 				dump.c	\
 				pop.c	\
 				destroy.c
 
-# -_- Files located in $(DOUBLE_LL_D) = ./src/linked_lists/double/ -_-
-DOUBLE_LL_F	=	create.c	\
+# -_- Files located in $(DOUBLE_GRAPH_D) = ./src/graph/double/ -_-
+DOUBLE_GRAPH_F	=	create.c	\
 				add.c	\
 				get.c	\
 				dump.c	\
 				pop.c	\
 				destroy.c
+
+# -_- Files located in $(DOUBLE_LL_D) = ./src/graph/double/ -_-
+BINARY_GRAPH_F	=	create.c	\
+					add.c	\
+					get.c	\
+					destroy.c
 
 # -_- Files located in $(HASHTABLE_D) = ./src/hashtable/ -_-
 HASHTABLE_F	=	create.c	\
@@ -204,18 +211,15 @@ SRC	=	$(addprefix $(IO_D), $(IO_F)) 	\
 		$(addprefix $(MY_PRINTF_UTILS_D), $(MY_PRINTF_UTILS_F))	\
 		$(addprefix $(MY_PRINTF_PARAM_D), $(MY_PRINTF_PARAM_F))	\
 		$(addprefix $(MY_PRINTF_MODIFIER_D), $(MY_PRINTF_MODIFIER_F))	\
-		$(addprefix $(NODE_LL_D), $(NODE_LL_F))	\
-		$(addprefix $(SIMPLE_LL_D), $(SIMPLE_LL_F))	\
-		$(addprefix $(DOUBLE_LL_D), $(DOUBLE_LL_F))	\
+		$(addprefix $(NODE_D), $(NODE_F))	\
+		$(addprefix $(SIMPLE_GRAPH_D), $(SIMPLE_GRAPH_F))	\
+		$(addprefix $(DOUBLE_GRAPH_D), $(DOUBLE_GRAPH_F))	\
+		$(addprefix $(BINARY_GRAPH_D), $(BINARY_GRAPH_F))	\
 		$(addprefix $(HASHTABLE_D), $(HASHTABLE_F))	\
 		$(addprefix $(CONFIG_D), $(CONFIG_F))
 
 # -_- puts all .c files wherever they come from into the bin folder as a .o -_-
 OBJ	=	$(SRC:$(SRC_D)%.c=$(OBJ_D)%.o)
-
-DEP	=	$(OBJ:.o=.d)
-
--include $(DEP)
 
 ## --__-- RULES --__--
 
@@ -225,7 +229,7 @@ $(NAME):	$(OBJ)
 	@$(AR) $(ARFLAGS) $@ $^
 	@printf "\033[1;32m%s\033[0m\n" "Build Complete!"
 
-# -_- Compiles .o files into bin folder from all c files in the VPATH directories -_-
+# -_- Compiles .o files into obj folder from all c files in the VPATH directories -_-
 $(OBJ_D)%.o:	$(SRC_D)%.c
 	@mkdir -p $(dir $@)
 	@$(CC) -o $@ -c $< $(CPPFLAGS) $(CFLAGS)
