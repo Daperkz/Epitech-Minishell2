@@ -1,0 +1,7 @@
+.vscode
+obj
+*.out
+*.o
+*.d
+*.a
+mysh
