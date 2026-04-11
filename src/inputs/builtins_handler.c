@@ -33,12 +33,7 @@ int is_builtin(char *cmd)
 
 int builtins(shell_t *shell)
 {
-    static const builtin_t builtin_arr[] = {
-        {EXIT_INPUT, &exit_builtin}, {CD_INPUT, &cd_builtin},
-        {ENV_INPUT, &env_builtin}, {SETENV_INPUT, &setenv_builtin},
-        {UNSETENV_INPUT, &unsetenv_builtin},
-        {NULL, NULL}
-    };
+    const builtin_t *builtin_arr = BUILTINS;
 
     if (!shell->input_array)
         return (EXIT_ACTION_DONE);

@@ -27,5 +27,11 @@ int env_builtin(shell_t *shell);
 int setenv_builtin(shell_t *shell);
 int unsetenv_builtin(shell_t *shell);
 
+const builtin_t BUILTINS[] = {
+        {EXIT_INPUT, &exit_builtin}, {CD_INPUT, &cd_builtin},
+        {ENV_INPUT, &env_builtin}, {SETENV_INPUT, &setenv_builtin},
+        {UNSETENV_INPUT, &unsetenv_builtin},
+        {NULL, NULL}
+};
 
 #endif /* !BUILTINS_H_ */
