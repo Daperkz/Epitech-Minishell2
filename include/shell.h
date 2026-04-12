@@ -11,9 +11,12 @@
     #include <unistd.h>
     #include <sys/wait.h>
 
+    #include "my/graph/binary_tree.h"
+
     #include "shell/macro.h"
     #include "shell/builtins.h"
     #include "shell/utils.h"
+    #include "shell/ast.h"
 
 typedef struct minishell_s {
     int last_errno;
@@ -25,10 +28,11 @@ typedef struct minishell_s {
     pid_t pid;
     char *input;
     ssize_t input_len;
-    char **commands;
-    int nbr_commands;
     char **input_array;
     int input_array_len;
+    char **commands;
+    int nbr_commands;
+    btree_t *ast;
     int pipe_fds[2];
     pid_t child;
     int child_status;
@@ -41,6 +45,8 @@ int exit_mysh(ssize_t nread);
 int parse_input(shell_t *shell);
 int command_flow(shell_t *shell, char *command, int is_piped);
 int single_command(shell_t *shell, char *command, int is_piped);
+
+int parse_ast(shell_t *shell);
 
 int file_error(shell_t *shell, char *file);
 void shift_array(shell_t *shell, int index);

@@ -18,9 +18,9 @@ int redirect(shell_t *shell, int i)
     char *file = shell->input_array[i + 1];
     int fd = -1;
 
-    if (my_strcmp(type, ROT) == 0)
+    if (my_strcmp(type, GRT) == 0)
         fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    else if (my_strcmp(type, ROAT) == 0)
+    else if (my_strcmp(type, D_GRT) == 0)
         fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
     else
         fd = open(file, O_RDONLY);

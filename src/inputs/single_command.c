@@ -36,7 +36,7 @@ static int not_a_builtin(shell_t *shell, int is_piped)
 
 static int create_input_array(shell_t *shell, char *command)
 {
-    shell->input_array = my_str_to_str_arr(command, BASIC_SEPERATOR);
+    shell->input_array = my_str_to_str_arr(command, WHITESPACES);
     if (!shell->input_array)
         return (EXIT_FAILURE);
     shell->input_array_len = my_len_str_arr(shell->input_array);

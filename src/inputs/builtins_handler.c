@@ -9,6 +9,15 @@
 
 #include "shell.h"
 
+const builtin_t BUILTINS[] = {
+    {EXIT_INPUT, &exit_builtin},
+    {CD_INPUT, &cd_builtin},
+    {ENV_INPUT, &env_builtin},
+    {SETENV_INPUT, &setenv_builtin},
+    {UNSETENV_INPUT, &unsetenv_builtin},
+    {NULL, NULL}
+};
+
 int is_builtin(char *cmd)
 {
     char **tmp = NULL;
@@ -16,7 +25,7 @@ int is_builtin(char *cmd)
 
     if (!cmd)
         return 0;
-    tmp = my_str_to_str_arr(cmd, BASIC_SEPERATOR);
+    tmp = my_str_to_str_arr(cmd, WHITESPACES);
     if (!tmp || !tmp[0]) {
         my_free_str_arr(tmp);
         return 0;

@@ -24,13 +24,13 @@ int handle_redirections(shell_t *shell)
     if (check_redirection_errors(shell) == EXIT_FAILURE)
         return (EXIT_ACTION_DONE);
     for (int i = 0; shell->input_array[i]; i++) {
-        if (my_strcmp(shell->input_array[i], RHT) == 0) {
+        if (my_strcmp(shell->input_array[i], D_LSR) == 0) {
             retv = heredoc(shell, i);
             i--;
         }
-        if ((my_strcmp(shell->input_array[i], ROT) == 0 ||
-                my_strcmp(shell->input_array[i], ROAT) == 0 ||
-                my_strcmp(shell->input_array[i], RIT) == 0)) {
+        if ((my_strcmp(shell->input_array[i], GRT) == 0 ||
+                my_strcmp(shell->input_array[i], D_GRT) == 0 ||
+                my_strcmp(shell->input_array[i], LSR) == 0)) {
             retv = redirect(shell, i);
             i--;
         }

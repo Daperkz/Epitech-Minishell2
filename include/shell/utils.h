@@ -8,8 +8,6 @@
 #ifndef SHELL_UTILS_H_
     #define SHELL_UTILS_H_
 
-    #define BASIC_SEPERATOR " \t\n"
-
 typedef struct minishell_s shell_t;
 
 // function for the CTRL + C signal to not crash terminal
@@ -28,5 +26,8 @@ int my_isletter(char c);
 int my_str_is_alphanumeric(char *str);
 
 int tilde_expansion(char **str_p, char *hwd);
+
+char *my_strstr_unquoted(char *str, char *pat);
+char *my_strrstr_unquoted(char *str, char *pat);
 
 #endif /* !UTILS_H_ */
