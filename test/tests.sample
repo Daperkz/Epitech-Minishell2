@@ -928,5 +928,6 @@ CLEAN=""
 TESTS=
   echo "mkdir testf"
   echo "ls | cd testf"
+  echo "cd ../"
   echo "rm -rf testf"
 [914-END]
