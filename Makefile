@@ -27,6 +27,8 @@ REDIRECTION_D	=	$(INPUTS_D)redirection/
 PIPE_D	=	$(INPUTS_D)pipe/
 UTILS_D	=	$(SRC_D)utils/
 STRINGS_D	=	$(UTILS_D)strings/
+AST_D	=	$(SRC_D)ast/
+AST_DATA_D	=	$(AST_D)data/
 
 SHELL_F	=	init_shell.c	\
 			the_prompt.c	\
@@ -63,7 +65,13 @@ UTILS_F	=	signal_handling.c	\
 STRINGS_F	=	find_command.c	\
 				join_path.c	\
 				my_str_is_alphanumeric.c	\
-				tilde_expansion.c
+				tilde_expansion.c	\
+				my_strstr_unquoted.c
+
+AST_F	=	create.c
+
+AST_DATA_F	=	create.c	\
+				destroy.c
 
 SRC	=	$(addprefix $(SRC_D), minishell.c)	\
 		$(addprefix $(SHELL_D), $(SHELL_F))	\
@@ -73,6 +81,8 @@ SRC	=	$(addprefix $(SRC_D), minishell.c)	\
 		$(addprefix $(PIPE_D), $(PIPE_F))	\
 		$(addprefix $(UTILS_D), $(UTILS_F))	\
 		$(addprefix $(STRINGS_D), $(STRINGS_F))	\
+		$(addprefix $(AST_D), $(AST_F))	\
+		$(addprefix $(AST_DATA_D), $(AST_DATA_F))	\
 
 
 OBJ	=	$(SRC:$(SRC_D)%.c=$(OBJ_D)%.o)
