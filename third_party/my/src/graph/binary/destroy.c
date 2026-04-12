@@ -14,4 +14,5 @@ void btree_destroy(btree_t *tree, void (*free_data)(void *))
     if (!tree)
         return;
     destroy_bnode_recursive(tree->root, free_data);
+    free(tree);
 }
