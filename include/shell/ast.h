@@ -33,6 +33,8 @@ typedef struct ast_data_s {
     char **cmd_args;    // NULL-terminated array for execve
 } ast_data_t;
 
+bnode_t *parse_recursive(char *str);
+
 ast_data_t *create_ast_data(ast_type_t type, char *args);
 void destroy_ast_data(void *data);
 
