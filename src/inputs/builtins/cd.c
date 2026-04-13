@@ -5,13 +5,6 @@
 ** cd
 */
 
-#include <stdlib.h>
-#include <errno.h>
-#include <string.h>
-
-#include "my/printf.h"
-#include "my/string.h"
-
 #include "shell.h"
 
 static int update_wd(shell_t *shell)

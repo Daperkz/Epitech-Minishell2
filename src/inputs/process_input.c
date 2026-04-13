@@ -5,12 +5,6 @@
 ** process_input
 */
 
-#include <stdlib.h>
-#include <errno.h>
-
-#include "my/printf.h"
-#include "my/string.h"
-
 #include "shell.h"
 
 int exit_mysh(ssize_t nread)

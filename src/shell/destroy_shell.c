@@ -5,10 +5,6 @@
 ** destroy_shell
 */
 
-#include <stdlib.h>
-
-#include "my/string.h"
-
 #include "shell.h"
 
 void destroy_shell(shell_t *shell)

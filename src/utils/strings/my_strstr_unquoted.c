@@ -5,8 +5,7 @@
 ** my_strstr_unquoted
 */
 
-#include "my/string.h"
-#include "my/macro.h"
+#include "shell.h"
 
 char *my_strstr_unquoted(char *str, char *pat)
 {
@@ -30,7 +29,7 @@ char *my_strstr_unquoted(char *str, char *pat)
     return (NULL);
 }
 
-char *my_strrstr_unquoted(char *str, char const *pat)
+char *my_strrstr_unquoted(char *str, char *pat)
 {
     int m = my_strlen(pat);
     char q = 0;

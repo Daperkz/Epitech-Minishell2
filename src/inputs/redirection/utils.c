@@ -5,8 +5,6 @@
 ** utils
 */
 
-#include <stdlib.h>
-
 #include "shell.h"
 
 void shift_array(shell_t *shell, int index)

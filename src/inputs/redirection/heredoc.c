@@ -5,13 +5,6 @@
 ** heredoc
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <fcntl.h>
-
-#include "my/string.h"
-#include "my/printf.h"
-
 #include "shell.h"
 
 static void heredoc_loop(char *keyword, int fd)

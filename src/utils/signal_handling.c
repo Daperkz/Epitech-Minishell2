@@ -5,10 +5,6 @@
 ** signal_handling
 */
 
-#include <signal.h>
-
-#include "my/printf.h"
-
 #include "shell.h"
 
 void handle_sigint(int sig)

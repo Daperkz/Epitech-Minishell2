@@ -5,11 +5,6 @@
 ** unsetenv
 */
 
-#include <stdlib.h>
-
-#include "my/printf.h"
-#include "my/string.h"
-
 #include "shell.h"
 
 static int remove_env_var(shell_t *shell, char *var)

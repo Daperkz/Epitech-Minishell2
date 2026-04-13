@@ -5,12 +5,6 @@
 ** error
 */
 
-#include <string.h>
-#include <errno.h>
-
-#include "my/string.h"
-#include "my/printf.h"
-
 #include "shell.h"
 
 static int is_valid(char *str)

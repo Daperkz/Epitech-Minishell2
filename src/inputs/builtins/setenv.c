@@ -5,12 +5,6 @@
 ** setenv
 */
 
-#include <stdlib.h>
-#include <errno.h>
-
-#include "my/printf.h"
-#include "my/string.h"
-
 #include "shell.h"
 
 static char *create_var(char *name, char *value)

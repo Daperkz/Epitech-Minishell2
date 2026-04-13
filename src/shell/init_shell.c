@@ -5,11 +5,6 @@
 ** init_shell
 */
 
-#include <unistd.h>
-#include <signal.h>
-
-#include "my/string.h"
-
 #include "shell.h"
 
 static char *getowd(char **env, char *cwd)

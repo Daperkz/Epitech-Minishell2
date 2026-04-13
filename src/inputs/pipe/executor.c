@@ -5,8 +5,6 @@
 ** executor
 */
 
-#include "my/printf.h"
-
 #include "shell.h"
 
 static void sync_pipe_remnants(shell_t *shell, pid_t last_pid)

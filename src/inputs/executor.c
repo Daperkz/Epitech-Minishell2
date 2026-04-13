@@ -5,15 +5,6 @@
 ** executor
 */
 
-#include <stdlib.h>
-#include <signal.h>
-#include <errno.h>
-#include <string.h>
-#include <stdio.h>
-
-
-#include "my/printf.h"
-
 #include "shell.h"
 
 static void error_printing(char *cmd)

@@ -5,9 +5,6 @@
 ** the_prompt
 */
 
-#include "my/printf.h"
-#include "my/string.h"
-
 #include "shell.h"
 
 static void normal_prompt(shell_t *shell)

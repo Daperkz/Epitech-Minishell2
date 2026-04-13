@@ -5,11 +5,7 @@
 ** destroy
 */
 
-#include <stdlib.h>
-
-#include "my/string.h"
-
-#include "shell/ast.h"
+#include "shell.h"
 
 void destroy_ast_data(void *data)
 {

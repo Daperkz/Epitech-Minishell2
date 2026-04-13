@@ -5,14 +5,6 @@
 ** single_command
 */
 
-#include <stdlib.h>
-#include <stdarg.h>
-#include <stdio.h>
-
-#include <my/printf.h>
-#include <my/string.h>
-#include <my/utils.h>
-
 #include "shell.h"
 
 static int not_a_builtin(shell_t *shell, int is_piped)

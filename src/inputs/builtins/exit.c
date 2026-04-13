@@ -5,11 +5,6 @@
 ** exit
 */
 
-#include <errno.h>
-
-#include "my/printf.h"
-#include "my/string.h"
-
 #include "shell.h"
 
 // when the input is exit returns 0 or the number passed in arg

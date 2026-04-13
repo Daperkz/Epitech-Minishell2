@@ -5,12 +5,6 @@
 ** minishell
 */
 
-#include <stdio.h>
-
-#include "my/utils.h"
-#include "my/string.h"
-#include "my/printf.h"
-
 #include "shell.h"
 
 int minishell(shell_t *shell)

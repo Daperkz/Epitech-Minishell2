@@ -5,11 +5,6 @@
 ** env
 */
 
-#include <errno.h>
-
-#include "my/printf.h"
-#include "my/string.h"
-
 #include "shell.h"
 
 int env_builtin(shell_t *shell)

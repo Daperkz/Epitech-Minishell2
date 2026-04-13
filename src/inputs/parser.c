@@ -5,9 +5,6 @@
 ** parser
 */
 
-#include "my/string.h"
-#include "my/printf.h"
-
 #include "shell.h"
 
 static void strip_endline(char *str)

@@ -5,9 +5,7 @@
 ** join_path
 */
 
-#include <stdlib.h>
-
-#include "my/string.h"
+#include "shell.h"
 
 char *join_path(char *path, char *command)
 {

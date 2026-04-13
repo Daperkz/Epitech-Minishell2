@@ -5,13 +5,7 @@
 ** create
 */
 
-#include <stdlib.h>
-
-#include "my/graph/binary_tree.h"
-#include "my/string.h"
-
-#include "shell/macro.h"
-#include "shell/ast.h"
+#include "shell.h"
 
 const ast_rules_t AST_RULES[] = {
     {COMMAND_SEPERATOR, AST_CMD_SEPERATOR,

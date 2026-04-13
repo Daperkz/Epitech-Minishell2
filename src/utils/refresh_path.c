@@ -5,8 +5,6 @@
 ** refresh_path
 */
 
-#include "my/string.h"
-
 #include "shell.h"
 
 int refresh_path(shell_t *shell)

@@ -5,11 +5,6 @@
 ** pipe_handler
 */
 
-#include <stdlib.h>
-
-#include "my/string.h"
-#include "my/printf.h"
-
 #include "shell.h"
 
 int pipe_handler(shell_t *shell, char *command)

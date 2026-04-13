@@ -5,12 +5,6 @@
 ** find_command
 */
 
-#include <errno.h>
-#include <stdlib.h>
-
-#include "my/printf.h"
-#include "my/string.h"
-
 #include "shell.h"
 
 // checks if the pathed_input : 1.exists -> 2.permission to execute.

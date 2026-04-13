@@ -5,8 +5,6 @@
 ** get_path_array
 */
 
-#include "my/string.h"
-
 #include "shell.h"
 
 char **get_path_array(char **env)

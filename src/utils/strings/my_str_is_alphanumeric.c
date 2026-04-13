@@ -5,7 +5,7 @@
 ** my_str_is_alphanumeric
 */
 
-#include "my/string.h"
+#include "shell.h"
 
 int my_isletter(char c)
 {

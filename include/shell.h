@@ -9,6 +9,13 @@
     #define SHELL_H_
 
     #include <unistd.h>
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <signal.h>
+    #include <errno.h>
+    #include <fcntl.h>
+    #include <string.h>
+    #include <stdarg.h>
     #include <sys/wait.h>
     #include <stdbool.h>
 

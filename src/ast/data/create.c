@@ -5,11 +5,7 @@
 ** create
 */
 
-#include <stdlib.h>
-
-#include "my/string.h"
-
-#include "shell/ast.h"
+#include "shell.h"
 
 static int create_args(ast_data_t *data, char *args)
 {

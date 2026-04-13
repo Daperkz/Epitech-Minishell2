@@ -5,9 +5,7 @@
 ** get_env_var
 */
 
-#include <unistd.h>
-
-#include "my/string.h"
+#include "shell.h"
 
 char *get_env_var(char **env, char *var, int size)
 {

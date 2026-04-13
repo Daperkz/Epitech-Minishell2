@@ -5,8 +5,6 @@
 ** builtins_handler
 */
 
-#include "my/string.h"
-
 #include "shell.h"
 
 const builtin_t BUILTINS[] = {

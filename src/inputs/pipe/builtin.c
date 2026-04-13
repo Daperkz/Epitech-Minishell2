@@ -5,8 +5,6 @@
 ** builtin
 */
 
-#include "my/printf.h"
-
 #include "shell.h"
 
 int pipe_builtin(shell_t *shell, char **pipe_segments, int i, int prev_fd)

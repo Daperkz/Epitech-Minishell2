@@ -5,11 +5,6 @@
 ** redirect
 */
 
-#include <fcntl.h>
-
-#include "my/string.h"
-#include "my/printf.h"
-
 #include "shell.h"
 
 int redirect(shell_t *shell, int i)

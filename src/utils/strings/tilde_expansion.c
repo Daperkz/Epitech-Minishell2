@@ -5,10 +5,6 @@
 ** tilde_expansion
 */
 
-#include <stdlib.h>
-
-#include "my/string.h"
-
 #include "shell.h"
 
 static void fill(char *old, char *new, char *hwd)

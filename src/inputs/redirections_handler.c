@@ -5,16 +5,6 @@
 ** REDIRions_handler
 */
 
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
-
-#include "my/printf.h"
-#include "my/string.h"
-
 #include "shell.h"
 
 int handle_redirections(shell_t *shell)
