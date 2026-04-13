@@ -17,8 +17,11 @@ int minishell(shell_t *shell)
         shell->input_len = getline(&shell->input, &size, stdin);
         if (exit_mysh(shell->input_len) == EXIT_SHUTDOWN)
             return (shell->last_errno);
-        retv = process_input(shell);
-        my_free_str_arr(shell->input_array);
+        shell->ast = create_ast(shell->input);
+        if (!shell->ast)
+            return (EXIT_ERROR);
+        retv = execute_ast(shell, shell->ast->root);
+        DESTROY_AST(shell->ast);
         shell->input_array = NULL;
         if (retv == EXIT_FAILURE)
             return (EXIT_ERROR);

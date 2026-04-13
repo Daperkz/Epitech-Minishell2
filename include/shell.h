@@ -64,20 +64,20 @@ int redirect(shell_t *shell, int i);
 int check_redirection_errors(shell_t *shell);
 int handle_redirections(shell_t *shell);
 
-int builtins(shell_t *shell);
 int is_builtin(char *cmd);
+int builtins(shell_t *shell, char **args);
 
 void pipe_child(shell_t *shell, char **pipe_segments, int i, int prev_fd);
 int execute_pipe(shell_t *shell, char **pipe_segments);
 int pipe_builtin(shell_t *shell, char **pipe_segments, int i, int prev_fd);
 int pipe_handler(shell_t *shell, char *command);
 
-char *find_command(shell_t *shell);
+char *find_command(shell_t *shell, char **cmd_args);
 int process_input(shell_t *shell);
 int single_command(shell_t *shell, char *command, int is_piped);
 
-int execute_child(shell_t *shell, char *program_path);
-int execute_command(shell_t *shell, char *program_path);
+int execute_child(shell_t *shell, char **cmd_args, char *program_path);
+int execute_command(shell_t *shell, char **cmd_args, char *program_path);
 
 void print_the_prompt(shell_t *shell);
 

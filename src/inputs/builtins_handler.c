@@ -8,11 +8,11 @@
 #include "shell.h"
 
 const builtin_t BUILTINS[] = {
-    {EXIT_INPUT, &exit_builtin},
-    {CD_INPUT, &cd_builtin},
-    {ENV_INPUT, &env_builtin},
-    {SETENV_INPUT, &setenv_builtin},
-    {UNSETENV_INPUT, &unsetenv_builtin},
+    {EXIT_INPUT, exit_builtin},
+    {CD_INPUT, cd_builtin},
+    {ENV_INPUT, env_builtin},
+    {SETENV_INPUT, setenv_builtin},
+    {UNSETENV_INPUT, unsetenv_builtin},
     {NULL, NULL}
 };
 
@@ -38,14 +38,14 @@ int is_builtin(char *cmd)
     return (retv);
 }
 
-int builtins(shell_t *shell)
+int builtins(shell_t *shell, char **args)
 {
     const builtin_t *builtin_arr = BUILTINS;
 
-    if (!shell->input_array)
+    if (!args || !(*args))
         return (EXIT_ACTION_DONE);
     for (int i = 0; builtin_arr[i].name; i++) {
-        if (my_strcmp(shell->input_array[0], builtin_arr[i].name) == 0)
+        if (my_strcmp(args[0], builtin_arr[i].name) == 0)
             return (builtin_arr[i].func(shell));
     }
     return (EXIT_SUCCESS);

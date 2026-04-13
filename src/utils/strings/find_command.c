@@ -21,9 +21,9 @@ static char *get_direct_path(shell_t *shell, char *cmd)
     return (NULL);
 }
 
-char *find_command(shell_t *shell)
+char *find_command(shell_t *shell, char **cmd_args)
 {
-    char *cmd = shell->input_array[0];
+    char *cmd = cmd_args[0];
     char *path = NULL;
 
     if (my_strchr(cmd, '/'))

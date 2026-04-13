@@ -10,18 +10,18 @@
 static int not_a_builtin(shell_t *shell, int is_piped)
 {
     int retv = (EXIT_SUCCESS);
-    char *program_path = find_command(shell);
+    char *program_path = find_command(shell, shell->input_array);
 
     if (program_path == MALLOC_FAIL) {
         return (EXIT_FAILURE);
     } else if (!program_path)
         return (EXIT_SUCCESS);
     if (is_piped) {
-        execute_child(shell, program_path);
+        execute_child(shell, shell->input_array, program_path);
         free(program_path);
         return (EXIT_FAILURE);
     }
-    retv = execute_command(shell, program_path);
+    retv = execute_command(shell, shell->input_array, program_path);
     free(program_path);
     return (retv);
 }
@@ -62,7 +62,7 @@ int command_flow(shell_t *shell, char *command, int is_piped)
     retv = handle_redirections(shell);
     if (retv == EXIT_FAILURE || retv == EXIT_ACTION_DONE)
         return (retv);
-    retv = builtins(shell);
+    retv = builtins(shell, shell->input_array);
     if (retv == EXIT_FAILURE || retv == EXIT_SHUTDOWN ||
         retv == EXIT_ACTION_DONE)
         return (retv);
