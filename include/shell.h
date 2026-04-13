@@ -10,8 +10,9 @@
 
     #include <unistd.h>
     #include <sys/wait.h>
+    #include <stdbool.h>
 
-    #include "my/graph/binary_tree.h"
+    #include "my.h"
 
     #include "shell/macro.h"
     #include "shell/builtins.h"
@@ -36,6 +37,7 @@ typedef struct minishell_s {
     int pipe_fds[2];
     pid_t child;
     int child_status;
+    bool is_piped
 } shell_t;
 
 int init_shell(shell_t *shell, char **env);
@@ -46,7 +48,7 @@ int parse_input(shell_t *shell);
 int command_flow(shell_t *shell, char *command, int is_piped);
 int single_command(shell_t *shell, char *command, int is_piped);
 
-int parse_ast(shell_t *shell);
+int execute_ast(shell_t *shell, bnode_t *node);
 
 int file_error(shell_t *shell, char *file);
 void shift_array(shell_t *shell, int index);

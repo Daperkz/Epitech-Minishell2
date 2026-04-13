@@ -20,9 +20,9 @@ typedef enum ast_type_e {
     AST_NONE,
     AST_COMMAND,                // builtins or external command
     AST_LSR,                    // Input Redirection
-    AST_D_LSR,                  // Double Input Redirection / Heredoc
+    AST_DLSR,                  // Double Input Redirection / Heredoc
     AST_GRT,                    // Output Redirection
-    AST_D_GRT,                  // Double Output Redirection / Append
+    AST_DGRT,                  // Double Output Redirection / Append
     AST_PIPE,                   // '|'
     AST_CMD_SEPERATOR           // ';'
 } ast_type_t;
@@ -48,6 +48,14 @@ typedef struct ast_rules_s {
     ast_search_t search_func;
     ast_exec_t execute_func;
 } ast_rules_t;
+
+int astexec_command_separator(shell_t *shell, bnode_t *node);
+int astexec_pipe(shell_t *shell, bnode_t *node);
+int astexec_dlsr(shell_t *shell, bnode_t *node);
+int astexec_lsr(shell_t *shell, bnode_t *node);
+int astexec_dgrt(shell_t *shell, bnode_t *node);
+int astexec_grt(shell_t *shell, bnode_t *node);
+int astexec_command(shell_t *shell, bnode_t *node);
 
 extern const ast_rules_t AST_RULES[];
 

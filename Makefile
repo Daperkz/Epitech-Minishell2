@@ -29,6 +29,7 @@ UTILS_D	=	$(SRC_D)utils/
 STRINGS_D	=	$(UTILS_D)strings/
 AST_D	=	$(SRC_D)ast/
 AST_DATA_D	=	$(AST_D)data/
+AST_RULES_D	=	$(AST_D)rules/
 
 SHELL_F	=	init_shell.c	\
 			the_prompt.c	\
@@ -68,10 +69,19 @@ STRINGS_F	=	find_command.c	\
 				tilde_expansion.c	\
 				my_strstr_unquoted.c
 
-AST_F	=	create.c
+AST_F	=	create.c	\
+			execute.c
 
 AST_DATA_F	=	create.c	\
 				destroy.c
+
+AST_RULES_F	=	command_seperator.c	\
+				pipe.c	\
+				dlsr.c	\
+				lsr.c	\
+				dgrt.c	\
+				grt.c	\
+				command.c
 
 SRC	=	$(addprefix $(SRC_D), minishell.c)	\
 		$(addprefix $(SHELL_D), $(SHELL_F))	\
@@ -83,6 +93,7 @@ SRC	=	$(addprefix $(SRC_D), minishell.c)	\
 		$(addprefix $(STRINGS_D), $(STRINGS_F))	\
 		$(addprefix $(AST_D), $(AST_F))	\
 		$(addprefix $(AST_DATA_D), $(AST_DATA_F))	\
+		$(addprefix $(AST_RULES_D), $(AST_RULES_F))	\
 
 
 OBJ	=	$(SRC:$(SRC_D)%.c=$(OBJ_D)%.o)
