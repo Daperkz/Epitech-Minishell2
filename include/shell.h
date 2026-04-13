@@ -37,7 +37,7 @@ typedef struct minishell_s {
     int pipe_fds[2];
     pid_t child;
     int child_status;
-    bool is_piped
+    bool is_piped;
 } shell_t;
 
 int init_shell(shell_t *shell, char **env);

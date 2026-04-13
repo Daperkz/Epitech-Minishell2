@@ -17,7 +17,7 @@
     #include "my/file.h"
     #include "my/printf.h"
 
-    #include "my/linked_lists.h"
+    #include "my/graph.h"
     #include "my/hashtable.h"
 
 #endif /* !MY_H_ */

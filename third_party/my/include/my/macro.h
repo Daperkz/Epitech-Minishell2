@@ -8,7 +8,9 @@
 #ifndef MACRO_H_
     #define MACRO_H_
 
-    #define NULL ((void *)0)
+    #ifndef NULL
+        #define NULL ((void *)0)
+    #endif
 
     #define EXIT_SUCCESS 0
     #define EXIT_FAILURE 1

@@ -10,7 +10,7 @@
 
     #include "simple_linked_list.h"
 
-typedef ll_t stack_t;
+typedef ll_t my_stack_t;
 
     #define STACK_CREATE() ll_create()
     #define STACK_DESTROY(q, free) ll_destroy(q, free)

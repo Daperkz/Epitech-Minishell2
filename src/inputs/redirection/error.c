@@ -18,8 +18,8 @@ static int is_valid(char *str)
     if (!str)
         return 0;
     return !(
-        my_strcmp(str, GRT) == 0 || my_strcmp(str, D_GRT) == 0 ||
-        my_strcmp(str, LSR) == 0 || my_strcmp(str, D_LSR) == 0
+        my_strcmp(str, GRT) == 0 || my_strcmp(str, DGRT) == 0 ||
+        my_strcmp(str, LSR) == 0 || my_strcmp(str, DLSR) == 0
     );
 }
 
@@ -65,11 +65,11 @@ int check_redirection_errors(shell_t *shell)
 
     for (int i = 0; shell->input_array[i]; i++) {
         type = shell->input_array[i];
-        if (my_strcmp(type, GRT) == 0 || my_strcmp(type, D_GRT) == 0) {
+        if (my_strcmp(type, GRT) == 0 || my_strcmp(type, DGRT) == 0) {
             has_out++;
             retv = io_check(shell, i, has_out, REDIR_AMBIGUOUS_OUT_ERR);
         }
-        if (my_strcmp(type, LSR) == 0 || my_strcmp(type, D_LSR) == 0) {
+        if (my_strcmp(type, LSR) == 0 || my_strcmp(type, DLSR) == 0) {
             has_in++;
             retv = io_check(shell, i, has_in, REDIR_AMBIGUOUS_IN_ERR);
         }
