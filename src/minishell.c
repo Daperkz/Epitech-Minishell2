@@ -6,7 +6,7 @@
 */
 
 #include "shell.h"
-
+/*
 int minishell(shell_t *shell)
 {
     size_t size = 0;
@@ -21,6 +21,28 @@ int minishell(shell_t *shell)
             return (EXIT_ERROR);
         retv = execute_ast(shell, shell->ast->root);
         DESTROY_AST(shell->ast);
+        shell->input_array = NULL;
+        if (retv == EXIT_FAILURE)
+            return (EXIT_ERROR);
+        if (retv == EXIT_SHUTDOWN)
+            return (shell->last_errno);
+    }
+    return (EXIT_SUCCESS);
+}
+*/
+
+int minishell(shell_t *shell)
+{
+    size_t size = 0;
+    int retv = EXIT_SUCCESS;
+
+    while (1) {
+        print_the_prompt(shell);
+        shell->input_len = getline(&shell->input, &size, stdin);
+        if (exit_mysh(shell->input_len) == EXIT_SHUTDOWN)
+            return (shell->last_errno);
+        retv = process_input(shell);
+        my_free_str_arr(shell->input_array);
         shell->input_array = NULL;
         if (retv == EXIT_FAILURE)
             return (EXIT_ERROR);
