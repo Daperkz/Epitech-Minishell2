@@ -41,12 +41,13 @@
     #define DGRT ">>" //redirection out append type
     #define LSR "<" //redirection in type
     #define DLSR "<<" //redirection heredoc type
-    #define REDIR_INVALID_COMMAND "Invalid null command.\n"
     #define REDIR_MSSING_NAME_ERR "Missing name for redirect.\n"
     #define REDIR_AMBIGUOUS_OUT_ERR "Ambiguous output redirect.\n"
     #define REDIR_AMBIGUOUS_IN_ERR "Ambiguous input redirect.\n"
     #define REDIR_HEREDOC_TMP_FILE "/tmp/.heredoc_tmp"
     #define REDIR_HEREDOC_MESSAGE "? "
     #define REDIR_HEREDOC_MESSAGE_LEN 2
+
+    #define INVALID_COMMAND "Invalid null command.\n"
 
 #endif /* !SHELL_MACRO_H_ */

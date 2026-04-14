@@ -14,7 +14,9 @@ int astexec_pipe(shell_t *shell, bnode_t *node)
 
 int astcheck_pipe(bnode_t *left, bnode_t *right)
 {
-    if (!left || right)
+    if (!left || right) {
+        my_fprintf(STDERR_FD, INVALID_COMMAND);
         return (1);
+    }
     return (0);
 }
