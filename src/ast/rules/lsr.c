@@ -27,7 +27,7 @@ int astcheck_lsr(bnode_t *left, bnode_t *right)
         my_fprintf(STDERR_FD, INVALID_COMMAND);
         return (1);
     }
-     if (is_input_redir(((ast_data_t *)(left->data))->type)) {
+    if (is_input_redir(((ast_data_t *)(left->data))->type)) {
         my_fprintf(STDERR_FD, REDIR_AMBIGUOUS_OUT_ERR);
         return (1);
     }

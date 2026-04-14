@@ -40,14 +40,18 @@ static bnode_t *build_branch(const ast_rules_t *rule, char *lstr, char *rstr)
     if (node == MALLOC_FAIL)
         return (MALLOC_FAIL);
     node->left = parse_recursive(lstr);
-    if (node->left == MALLOC_FAIL) {
+    node->right = parse_recursive(rstr);
+    if (node->left == MALLOC_FAIL || node->right == MALLOC_FAIL) {
         destroy_bnode_recursive(node, &destroy_ast_data);
         return (MALLOC_FAIL);
     }
-    node->right = parse_recursive(rstr);
-    if (node->right == MALLOC_FAIL) {
+    if (node->left == SYNTAX_ERROR || node->right == SYNTAX_ERROR) {
         destroy_bnode_recursive(node, &destroy_ast_data);
-        return (MALLOC_FAIL);
+        return (SYNTAX_ERROR);
+    }
+    if (rule->validator && rule->validator(node->left, node->right) == 1) {
+        destroy_bnode_recursive(node, &destroy_ast_data);
+        return (SYNTAX_ERROR);
     }
     return (node);
 }
