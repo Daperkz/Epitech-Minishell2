@@ -37,6 +37,6 @@ char *find_command(shell_t *shell, char **cmd_args)
         free(path);
     }
     shell->last_errno = EPERM;
-    my_fprintf(STDERR_FD, "%s: Command not found.\n", shell->input_array[0]);
+    my_fprintf(STDERR_FD, "%s: Command not found.\n", cmd_args[0]);
     return (NULL);
 }
