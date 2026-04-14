@@ -117,6 +117,7 @@ int create_ast(shell_t *shell, char *str)
     shell->ast->root = parse_recursive(str);
     if (shell->ast->root == SYNTAX_ERROR) {
         shell->last_errno = 1;
+        shell->ast->root = NULL;
         DESTROY_AST(shell->ast);
         shell->ast = NULL;
         return (EXIT_SUCCESS);
