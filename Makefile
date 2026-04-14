@@ -21,6 +21,7 @@ OBJ_D	=	$(ROOT_DIR)obj/
 SRC_D	=	$(ROOT_DIR)src/
 
 SHELL_D	=	$(SRC_D)shell/
+FEATURES_D	=	$(SRC_D)features/
 INPUTS_D	=	$(SRC_D)inputs/
 BUILTINS_D	=	$(INPUTS_D)builtins/
 REDIRECTION_D	=	$(INPUTS_D)redirection/
@@ -37,7 +38,7 @@ SHELL_F	=	init_shell.c	\
 
 INPUTS_F	=	parser.c	\
 				process_input.c	\
-				single_command.c	\
+					single_command.c	\
 				executor.c	\
 				builtins_handler.c	\
 				pipe_handler.c	\

@@ -39,26 +39,40 @@ ast_data_t *create_ast_data(ast_type_t type, char *args);
 void destroy_ast_data(void *data);
 
 
-typedef int (*ast_exec_t)(shell_t *shell, bnode_t *node);
 typedef char *(*ast_search_t)(char *str, char *seps);
+typedef int (*ast_exec_t)(shell_t *shell, bnode_t *node);
+typedef int (*ast_validate_t)(bnode_t *left, bnode_t *right);
 
 typedef struct ast_rules_s {
     char *token;
     ast_type_t type;
     ast_search_t search_func;
+    ast_validate_t validator;
     ast_exec_t execute_func;
 } ast_rules_t;
 
 int astexec_command_separator(shell_t *shell, bnode_t *node);
+int astcheck_command_separator(bnode_t *left, bnode_t *right);
+
 int astexec_pipe(shell_t *shell, bnode_t *node);
+int astcheck_pipe(bnode_t *left, bnode_t *right);
+
 int astexec_dlsr(shell_t *shell, bnode_t *node);
+int astcheck_dlsr(bnode_t *left, bnode_t *right);
+
 int astexec_lsr(shell_t *shell, bnode_t *node);
+int astcheck_lsr(bnode_t *left, bnode_t *right);
+
 int astexec_dgrt(shell_t *shell, bnode_t *node);
+int astcheck_dgrt(bnode_t *left, bnode_t *right);
+
 int astexec_grt(shell_t *shell, bnode_t *node);
+int astcheck_grt(bnode_t *left, bnode_t *right);
+
 int astexec_command(shell_t *shell, bnode_t *node);
 
 extern const ast_rules_t AST_RULES[];
 
-btree_t *create_ast(char *str);
+int create_ast(shell_t *shell, char *str);
 
 #endif /* !AST_H_ */

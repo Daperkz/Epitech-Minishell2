@@ -8,19 +8,19 @@
 #include "shell.h"
 
 const ast_rules_t AST_RULES[] = {
-    {COMMAND_SEPERATOR, AST_CMD_SEPERATOR,
-        my_strrstr_unquoted, astexec_command_separator},
-    {PIPE_SEPERATOR, AST_PIPE,
-        my_strrstr_unquoted, astexec_pipe},
-    {DLSR, AST_DLSR,
-        my_strstr_unquoted, astexec_dlsr},
-    {LSR, AST_LSR,
-        my_strstr_unquoted, astexec_lsr},
-    {DGRT, AST_DGRT,
-        my_strstr_unquoted, astexec_dgrt},
-    {GRT, AST_GRT,
-        my_strstr_unquoted, astexec_grt},
-    {NULL, AST_NONE,
+    {COMMAND_SEPERATOR, AST_CMD_SEPERATOR, my_strrstr_unquoted,
+        astcheck_command_separator, astexec_command_separator},
+    {PIPE_SEPERATOR, AST_PIPE, my_strrstr_unquoted,
+        astcheck_pipe, astexec_pipe},
+    {DLSR, AST_DLSR, my_strstr_unquoted,
+        astcheck_dlsr, astexec_dlsr},
+    {LSR, AST_LSR, my_strstr_unquoted,
+        astcheck_lsr, astexec_lsr},
+    {DGRT, AST_DGRT, my_strstr_unquoted,
+        astcheck_dgrt, astexec_dgrt},
+    {GRT, AST_GRT, my_strstr_unquoted,
+        astcheck_grt, astexec_grt},
+    {NULL, AST_NONE, NULL,
         NULL, NULL}
 };
 
@@ -105,16 +105,21 @@ bnode_t *parse_recursive(char *str)
     return (res);
 }
 
-btree_t *create_ast(char *str)
+int create_ast(shell_t *shell, char *str)
 {
-    btree_t *ast = btree_create();
-
-    if (!ast)
-        return (NULL);
-    ast->root = parse_recursive(str);
-    if (ast->root == MALLOC_FAIL) {
-        DESTROY_AST(ast);
-        return (NULL);
+    shell->ast = btree_create();
+    if (!shell->ast)
+        return (EXIT_ERROR);
+    shell->ast->root = parse_recursive(str);
+    if (shell->ast->root == SYNTAX_ERROR) {
+        shell->last_errno = 1;
+        DESTROY_AST(shell->ast);
+        shell->ast = NULL;
+        return (EXIT_SUCCESS);
     }
-    return (ast);
+    if (shell->ast->root == MALLOC_FAIL) {
+        DESTROY_AST(shell->ast);
+        return (EXIT_ERROR);
+    }
+    return (EXIT_SUCCESS);
 }

@@ -17,8 +17,7 @@ int minishell(shell_t *shell)
         shell->input_len = getline(&shell->input, &size, stdin);
         if (exit_mysh(shell->input_len) == EXIT_SHUTDOWN)
             return (shell->last_errno);
-        shell->ast = create_ast(shell->input);
-        if (!shell->ast)
+        if (create_ast(shell, shell->input) == EXIT_ERROR)
             return (EXIT_ERROR);
         retv = execute_ast(shell, shell->ast->root);
         DESTROY_AST(shell->ast);
