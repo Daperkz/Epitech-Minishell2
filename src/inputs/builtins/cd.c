@@ -40,9 +40,9 @@ static int no_arg_case(shell_t *shell)
     return (perform_cd(shell, shell->hwd));
 }
 
-static int arg_case(shell_t *shell)
+static int arg_case(shell_t *shell, char **cmd_args)
 {
-    char *dest = shell->input_array[1];
+    char *dest = cmd_args[1];
 
     if (my_strcmp(dest, "~") == 0)
         return no_arg_case(shell);
@@ -56,12 +56,12 @@ static int arg_case(shell_t *shell)
     return (perform_cd(shell, dest));
 }
 
-int cd_builtin(shell_t *shell)
+int cd_builtin(shell_t *shell, char **cmd_args)
 {
     shell->last_errno = 0;
-    if (shell->input_array_len == 1) {
+    if (my_len_str_arr(cmd_args) == 1) {
         return no_arg_case(shell);
-    } else if (shell->input_array_len >= 2)
-        return arg_case(shell);
+    } else if (my_len_str_arr(cmd_args) >= 2)
+        return arg_case(shell, cmd_args);
     return (EXIT_ACTION_DONE);
 }

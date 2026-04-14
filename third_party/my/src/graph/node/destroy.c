@@ -8,6 +8,7 @@
 #include <stdlib.h>
 
 #include "my/graph/node.h"
+#include "my/macro.h"
 
 void destroy_node(node_t *node, void (*free_data)(void *))
 {
@@ -38,7 +39,7 @@ void destroy_bnode(bnode_t *node, void (*free_data)(void *))
 
 void destroy_bnode_recursive(bnode_t *node, void (*free_data)(void *))
 {
-    if (!node)
+    if (node == NULL || node == MALLOC_FAIL || node == SYNTAX_ERROR)
         return;
     destroy_bnode_recursive(node->left, free_data);
     destroy_bnode_recursive(node->right, free_data);

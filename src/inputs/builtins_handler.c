@@ -38,15 +38,15 @@ int is_builtin(char *cmd)
     return (retv);
 }
 
-int builtins(shell_t *shell, char **args)
+int builtins(shell_t *shell, char **cmd_args)
 {
     const builtin_t *builtin_arr = BUILTINS;
 
-    if (!args || !(*args))
+    if (!cmd_args || !(*cmd_args))
         return (EXIT_ACTION_DONE);
     for (int i = 0; builtin_arr[i].name; i++) {
-        if (my_strcmp(args[0], builtin_arr[i].name) == 0)
-            return (builtin_arr[i].func(shell));
+        if (my_strcmp(cmd_args[0], builtin_arr[i].name) == 0)
+            return (builtin_arr[i].func(shell, cmd_args));
     }
     return (EXIT_SUCCESS);
 }

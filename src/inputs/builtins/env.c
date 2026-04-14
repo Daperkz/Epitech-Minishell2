@@ -7,10 +7,10 @@
 
 #include "shell.h"
 
-int env_builtin(shell_t *shell)
+int env_builtin(shell_t *shell, char **cmd_args)
 {
     shell->last_errno = 0;
-    if (shell->input_array_len == 1) {
+    if (my_len_str_arr(cmd_args) == 1) {
         my_put_str_arr(shell->env, '\n');
         return (EXIT_ACTION_DONE);
     } else {

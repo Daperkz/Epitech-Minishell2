@@ -31,20 +31,20 @@ static int remove_env_var(shell_t *shell, char *var)
     return (EXIT_SUCCESS);
 }
 
-int unsetenv_builtin(shell_t *shell)
+int unsetenv_builtin(shell_t *shell, char **cmd_args)
 {
     int retv = (EXIT_ACTION_DONE);
 
-    if (shell->input_array_len < 2) {
+    if (my_len_str_arr(cmd_args) < 2) {
         my_fprintf(STDERR_FD, "unsetenv: Too few arguments.\n");
         shell->last_errno = 1;
         return (EXIT_ACTION_DONE);
     }
     shell->last_errno = 0;
-    for (int i = 1; shell->input_array[i]; i++) {
-        if (remove_env_var(shell, shell->input_array[i]) == EXIT_FAILURE)
+    for (int i = 1; cmd_args[i]; i++) {
+        if (remove_env_var(shell, cmd_args[i]) == EXIT_FAILURE)
             return (EXIT_FAILURE);
-        if (my_strcmp(shell->input_array[i], "PATH") == 0)
+        if (my_strcmp(cmd_args[i], "PATH") == 0)
             retv = refresh_path(shell);
         if (retv == EXIT_FAILURE)
             return (EXIT_FAILURE);

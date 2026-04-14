@@ -19,7 +19,8 @@ int minishell(shell_t *shell)
             return (shell->last_errno);
         if (create_ast(shell, shell->input) == EXIT_ERROR)
             return (EXIT_ERROR);
-        retv = execute_ast(shell, shell->ast->root);
+        retv = (shell->ast) ?
+            execute_ast(shell, shell->ast->root) : EXIT_SUCCESS;
         DESTROY_AST(shell->ast);
         shell->input_array = NULL;
         if (retv == EXIT_FAILURE)

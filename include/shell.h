@@ -65,7 +65,7 @@ int check_redirection_errors(shell_t *shell);
 int handle_redirections(shell_t *shell);
 
 int is_builtin(char *cmd);
-int builtins(shell_t *shell, char **args);
+int builtins(shell_t *shell, char **cmd_args);
 
 void pipe_child(shell_t *shell, char **pipe_segments, int i, int prev_fd);
 int execute_pipe(shell_t *shell, char **pipe_segments);

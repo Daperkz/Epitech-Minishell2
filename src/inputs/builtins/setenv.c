@@ -81,17 +81,17 @@ static int error_case(char *env_name)
     return (EXIT_SUCCESS);
 }
 
-int setenv_builtin(shell_t *shell)
+int setenv_builtin(shell_t *shell, char **cmd_args)
 {
-    char *env_name = shell->input_array[1];
-    char *env_value = (shell->input_array_len == 3) ?
-        shell->input_array[2] : "";
+    char *env_name = cmd_args[1];
+    char *env_value = (my_len_str_arr(cmd_args) == 3) ?
+        cmd_args[2] : "";
 
     shell->last_errno = 0;
-    if (shell->input_array_len == 1) {
+    if (my_len_str_arr(cmd_args) == 1) {
         my_put_str_arr(shell->env, '\n');
         return (EXIT_ACTION_DONE);
-    } else if (shell->input_array_len > 3) {
+    } else if (my_len_str_arr(cmd_args) > 3) {
         shell->last_errno = EINVAL;
         my_fprintf(STDERR_FD, "setenv: Too many arguments.\n");
         return (EXIT_ACTION_DONE);

@@ -12,13 +12,10 @@ int astexec_dlsr(shell_t *shell, bnode_t *node)
     return (EXIT_SUCCESS);
 }
 
-static bool is_input_redir(ast_type_t type)
-{
-    return (type == AST_LSR || type == AST_DLSR);
-}
-
 int astcheck_dlsr(bnode_t *left, bnode_t *right)
 {
+    ast_data_t *data;
+
     if (!right) {
         my_fprintf(STDERR_FD, REDIR_MSSING_NAME_ERR);
         return (1);
@@ -27,7 +24,8 @@ int astcheck_dlsr(bnode_t *left, bnode_t *right)
         my_fprintf(STDERR_FD, INVALID_COMMAND);
         return (1);
     }
-    if (is_input_redir(((ast_data_t *)(left->data))->type)) {
+    data = left->data;
+    if (data->type == AST_LSR || data->type == AST_DLSR) {
         my_fprintf(STDERR_FD, REDIR_AMBIGUOUS_OUT_ERR);
         return (1);
     }

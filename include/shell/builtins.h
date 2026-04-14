@@ -18,14 +18,14 @@ typedef struct minishell_s shell_t;
 
 typedef struct builtin_s {
     char *name;
-    int (*func)(shell_t *);
+    int (*func)(shell_t *, char **);
 } builtin_t;
 
-int exit_builtin(shell_t *shell);
-int cd_builtin(shell_t *shell);
-int env_builtin(shell_t *shell);
-int setenv_builtin(shell_t *shell);
-int unsetenv_builtin(shell_t *shell);
+int exit_builtin(shell_t *shell, char **cmd_args);
+int cd_builtin(shell_t *shell, char **cmd_args);
+int env_builtin(shell_t *shell, char **cmd_args);
+int setenv_builtin(shell_t *shell, char **cmd_args);
+int unsetenv_builtin(shell_t *shell, char **cmd_args);
 
 extern const builtin_t BUILTINS[];
 

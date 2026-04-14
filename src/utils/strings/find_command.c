@@ -31,7 +31,7 @@ char *find_command(shell_t *shell, char **cmd_args)
     for (int i = 0; shell->path_arr && shell->path_arr[i]; i++) {
         path = join_path(shell->path_arr[i], cmd);
         if (!path)
-            return ((char *)-1);
+            return (MALLOC_FAIL);
         if (access(path, X_OK) == 0)
             return path;
         free(path);
