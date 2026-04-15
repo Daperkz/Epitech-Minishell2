@@ -76,4 +76,6 @@ extern const ast_rules_t AST_RULES[];
 
 int create_ast(shell_t *shell, char *str);
 
+int execute_ast(shell_t *shell, bnode_t *node);
+
 #endif /* !AST_H_ */

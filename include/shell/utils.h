@@ -17,6 +17,7 @@ void handle_sigint(int sig);
 void handle_child_status(shell_t *shell, int status);
 
 char *join_path(char *path, char *command);
+char *find_command(shell_t *shell, char **cmd_args);
 
 char *get_env_var(char **env, char *var, int size);
 char **get_path_array(char **env);
