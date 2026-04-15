@@ -29,4 +29,7 @@ int unsetenv_builtin(shell_t *shell, char **cmd_args);
 
 extern const builtin_t BUILTINS[];
 
+int is_builtin(char *cmd);
+int builtins(shell_t *shell, char **cmd_args);
+
 #endif /* !BUILTINS_H_ */

@@ -14,8 +14,9 @@ int astexec_command_separator(shell_t *shell, bnode_t *node)
     return (execute_ast(shell, node->right));
 }
 
-int astcheck_command_separator(bnode_t *left, bnode_t *right)
+int astcheck_command_separator(shell_t *shell, bnode_t *left, bnode_t *right)
 {
+    UNUSED(shell);
     UNUSED(left);
     UNUSED(right);
     return (0);

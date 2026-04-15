@@ -48,24 +48,34 @@ typedef struct minishell_s {
 } shell_t;
 
 int init_shell(shell_t *shell, char **env);
+void print_the_prompt(shell_t *shell);
+void destroy_shell(shell_t *shell);
 
 int exit_mysh(ssize_t nread);
+
+int exec_command(shell_t *shell, char **cmd_args);
+int exec_dgrt(shell_t *shell, bnode_t *node);
+int exec_dlsr(shell_t *shell, bnode_t *node);
+int exec_grt(shell_t *shell, bnode_t *node);
+int exec_lsr(shell_t *shell, bnode_t *node);
+
+int execute_ast(shell_t *shell, bnode_t *node);
+
 
 int parse_input(shell_t *shell);
 int command_flow(shell_t *shell, char *command, int is_piped);
 int single_command(shell_t *shell, char *command, int is_piped);
 
-int execute_ast(shell_t *shell, bnode_t *node);
 
+int validity_error(shell_t *shell);
+int ambiguous_error(shell_t *shell, char *message);
 int file_error(shell_t *shell, char *file);
+
 void shift_array(shell_t *shell, int index);
 int heredoc(shell_t *shell, int i);
 int redirect(shell_t *shell, int i);
 int check_redirection_errors(shell_t *shell);
 int handle_redirections(shell_t *shell);
-
-int is_builtin(char *cmd);
-int builtins(shell_t *shell, char **cmd_args);
 
 void pipe_child(shell_t *shell, char **pipe_segments, int i, int prev_fd);
 int execute_pipe(shell_t *shell, char **pipe_segments);
@@ -78,9 +88,5 @@ int single_command(shell_t *shell, char *command, int is_piped);
 
 int execute_child(shell_t *shell, char **cmd_args, char *program_path);
 int execute_command(shell_t *shell, char **cmd_args, char *program_path);
-
-void print_the_prompt(shell_t *shell);
-
-void destroy_shell(shell_t *shell);
 
 #endif /* !SHELL_H_ */

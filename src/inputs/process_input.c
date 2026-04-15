@@ -17,33 +17,16 @@ int exit_mysh(ssize_t nread)
     return (EXIT_SUCCESS);
 }
 
-static int multiple_commands(shell_t *shell)
-{
-    int retv = EXIT_SUCCESS;
-    int willexit = 0;
-
-    for (int i = 0; shell->commands[i]; i++) {
-        retv = pipe_handler(shell, shell->commands[i]);
-        if (retv == EXIT_SHUTDOWN)
-            willexit = 1;
-    }
-    return (willexit ? EXIT_SHUTDOWN : retv);
-}
-
 int process_input(shell_t *shell)
 {
     int retv = EXIT_FAILURE;
 
-    retv = parse_input(shell);
-    if (retv == EXIT_FAILURE || retv == EXIT_ACTION_DONE)
-        return (retv);
-    if (!shell->commands) {
-        retv = pipe_handler(shell, shell->input);
-    } else if (shell->commands) {
-        retv = multiple_commands(shell);
-    }
-    my_free_str_arr(shell->commands);
-    shell->commands = NULL;
-    shell->nbr_commands = 0;
+    if (create_ast(shell, shell->input) == EXIT_ERROR)
+        return (EXIT_ERROR);
+    if (!shell->ast)
+        return (EXIT_SUCCESS);
+    retv = execute_ast(shell, shell->ast->root);
+    DESTROY_AST(shell->ast);
+    shell->ast = NULL;
     return (retv);
 }

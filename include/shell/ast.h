@@ -33,7 +33,7 @@ typedef struct ast_data_s {
     char **cmd_args;    // NULL-terminated array for execve
 } ast_data_t;
 
-bnode_t *parse_recursive(char *str);
+bnode_t *parse_recursive(shell_t *shell, char *str);
 
 ast_data_t *create_ast_data(ast_type_t type, char *args);
 void destroy_ast_data(void *data);
@@ -41,33 +41,34 @@ void destroy_ast_data(void *data);
 
 typedef char *(*ast_search_t)(char *str, char *seps);
 typedef int (*ast_exec_t)(shell_t *shell, bnode_t *node);
-typedef int (*ast_validate_t)(bnode_t *left, bnode_t *right);
+typedef int (*ast_validate_t)(shell_t *shell, bnode_t *left, bnode_t *right);
 
 typedef struct ast_rules_s {
     char *token;
     ast_type_t type;
     ast_search_t search_func;
     ast_validate_t validator;
+    int args_limit; // 0 for everything, x for x args
     ast_exec_t execute_func;
 } ast_rules_t;
 
 int astexec_command_separator(shell_t *shell, bnode_t *node);
-int astcheck_command_separator(bnode_t *left, bnode_t *right);
+int astcheck_command_separator(shell_t *shell, bnode_t *left, bnode_t *right);
 
 int astexec_pipe(shell_t *shell, bnode_t *node);
-int astcheck_pipe(bnode_t *left, bnode_t *right);
+int astcheck_pipe(shell_t *shell, bnode_t *left, bnode_t *right);
 
 int astexec_dlsr(shell_t *shell, bnode_t *node);
-int astcheck_dlsr(bnode_t *left, bnode_t *right);
+int astcheck_dlsr(shell_t *shell, bnode_t *left, bnode_t *right);
 
 int astexec_lsr(shell_t *shell, bnode_t *node);
-int astcheck_lsr(bnode_t *left, bnode_t *right);
+int astcheck_lsr(shell_t *shell, bnode_t *left, bnode_t *right);
 
 int astexec_dgrt(shell_t *shell, bnode_t *node);
-int astcheck_dgrt(bnode_t *left, bnode_t *right);
+int astcheck_dgrt(shell_t *shell, bnode_t *left, bnode_t *right);
 
 int astexec_grt(shell_t *shell, bnode_t *node);
-int astcheck_grt(bnode_t *left, bnode_t *right);
+int astcheck_grt(shell_t *shell, bnode_t *left, bnode_t *right);
 
 int astexec_command(shell_t *shell, bnode_t *node);
 

@@ -23,8 +23,8 @@ SRC_D	=	$(ROOT_DIR)src/
 SHELL_D	=	$(SRC_D)shell/
 FEATURES_D	=	$(SRC_D)features/
 BUILTINS_D	=	$(FEATURES_D)builtins/
+REDIRECTION_D	=	$(FEATURES_D)redirections/
 INPUTS_D	=	$(SRC_D)inputs/
-REDIRECTION_D	=	$(INPUTS_D)redirection/
 PIPE_D	=	$(INPUTS_D)pipe/
 UTILS_D	=	$(SRC_D)utils/
 STRINGS_D	=	$(UTILS_D)strings/
@@ -36,7 +36,9 @@ SHELL_F	=	init_shell.c	\
 			the_prompt.c	\
 			destroy_shell.c
 
-FEATURES_F	=	builtins_handler.c
+FEATURES_F	=	builtins_handler.c	\
+				command.c	\
+				child.c
 
 
 BUILTINS_F	=	exit.c	\
@@ -45,17 +47,15 @@ BUILTINS_F	=	exit.c	\
 				setenv.c	\
 				unsetenv.c
 
-INPUTS_F	=	parser.c	\
-				process_input.c	\
-				single_command.c	\
-				executor.c	\
-				pipe_handler.c	\
-				redirections_handler.c
 
 REDIRECTION_F	=	error.c	\
-					heredoc.c	\
-					redirect.c	\
-					utils.c
+					dgrt.c	\
+					dlsr.c	\
+					grt.c	\
+					lsr.c
+
+
+INPUTS_F	=	process_input.c	\
 
 PIPE_F	=	child.c	\
 			executor.c	\
@@ -92,7 +92,6 @@ SRC	=	$(addprefix $(SRC_D), minishell.c)	\
 		$(addprefix $(INPUTS_D), $(INPUTS_F))	\
 		$(addprefix $(BUILTINS_D), $(BUILTINS_F))	\
 		$(addprefix $(REDIRECTION_D), $(REDIRECTION_F))	\
-		$(addprefix $(PIPE_D), $(PIPE_F))	\
 		$(addprefix $(UTILS_D), $(UTILS_F))	\
 		$(addprefix $(STRINGS_D), $(STRINGS_F))	\
 		$(addprefix $(AST_D), $(AST_F))	\

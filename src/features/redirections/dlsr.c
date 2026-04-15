@@ -1,5 +1,12 @@
 /*
 ** EPITECH PROJECT, 2026
+** dlsr.c
+** File description:
+** dlsr
+*/
+
+/*
+** EPITECH PROJECT, 2026
 ** heredoc.c
 ** File description:
 ** heredoc
@@ -25,22 +32,23 @@ static void heredoc_loop(char *keyword, int fd)
     free(line);
 }
 
-int heredoc(shell_t *shell, int i)
+int exec_dlsr(shell_t *shell, bnode_t *node)
 {
-    int retv = EXIT_SUCCESS;
-    char *keyword = shell->input_array[i + 1];
-    int tmp_fd = open(REDIR_HEREDOC_TMP_FILE, O_WRONLY | O_CREAT
-        | O_TRUNC, 0600);
+    ast_data_t *rdata = (ast_data_t *)node->right->data;
+    int retv;
+    char *keyword = rdata->args;
+    int pipefd[2];
+    int saved_stdin;
 
-    if (tmp_fd == -1)
-        return (EXIT_FAILURE);
-    heredoc_loop(keyword, tmp_fd);
-    close(tmp_fd);
-    free(shell->input_array[i + 1]);
-    shell->input_array[i][1] = '\0';
-    shell->input_array[i + 1] = my_strdup(REDIR_HEREDOC_TMP_FILE);
-    if (!shell->input_array[i + 1])
-        return (EXIT_FAILURE);
-    retv = redirect(shell, i);
+    if (pipe(pipefd) == -1)
+        return (EXIT_ERROR);
+    heredoc_loop(keyword, pipefd[1]);
+    close(pipefd[1]);
+    saved_stdin = dup(STDIN_FILENO);
+    dup2(pipefd[0], STDIN_FILENO);
+    close(pipefd[0]);
+    retv = execute_ast(shell, node->left);
+    dup2(saved_stdin, STDIN_FILENO);
+    close(saved_stdin);
     return (retv);
 }
