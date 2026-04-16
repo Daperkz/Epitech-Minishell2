@@ -38,8 +38,11 @@ int exec_pipe(shell_t *shell, bnode_t *node)
     lpid = fork();
     if (lpid == -1)
         return (EXIT_ERROR);
-    if (lpid == 0)
+    if (lpid == 0) {
+        shell->is_piped = 1;
         exec_pipe_left(shell, node, pfd);
+    }
+    shell->is_piped = 0;
     retv = exec_pipe_right(shell, node, pfd);
     dup2(saved_stdin, STDIN_FILENO);
     close(saved_stdin);
