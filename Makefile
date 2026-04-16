@@ -25,7 +25,6 @@ FEATURES_D	=	$(SRC_D)features/
 BUILTINS_D	=	$(FEATURES_D)builtins/
 REDIRECTION_D	=	$(FEATURES_D)redirections/
 INPUTS_D	=	$(SRC_D)inputs/
-PIPE_D	=	$(INPUTS_D)pipe/
 UTILS_D	=	$(SRC_D)utils/
 STRINGS_D	=	$(UTILS_D)strings/
 AST_D	=	$(SRC_D)ast/
@@ -38,7 +37,8 @@ SHELL_F	=	init_shell.c	\
 
 FEATURES_F	=	builtins_handler.c	\
 				command.c	\
-				child.c
+				child.c	\
+				pipe.c
 
 
 BUILTINS_F	=	exit.c	\
@@ -57,9 +57,6 @@ REDIRECTION_F	=	error.c	\
 
 INPUTS_F	=	process_input.c	\
 
-PIPE_F	=	child.c	\
-			executor.c	\
-			builtin.c
 
 UTILS_F	=	signal_handling.c	\
 			get_env_var.c	\

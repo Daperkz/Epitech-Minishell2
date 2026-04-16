@@ -78,6 +78,8 @@ int process_input(shell_t *shell);
 
 // -_- pipe -_-
 
+int exec_pipe(shell_t *shell, bnode_t *node);
+
 void pipe_child(shell_t *shell, char **pipe_segments, int i, int prev_fd);
 int execute_pipe(shell_t *shell, char **pipe_segments);
 int pipe_builtin(shell_t *shell, char **pipe_segments, int i, int prev_fd);
