@@ -25,6 +25,10 @@ int process_input(shell_t *shell)
         return (EXIT_ERROR);
     if (!shell->ast)
         return (EXIT_SUCCESS);
+    if (!shell->ast->root) {
+        DESTROY_AST(shell->ast);
+        return (EXIT_SUCCESS);
+    }
     retv = execute_ast(shell, shell->ast->root);
     DESTROY_AST(shell->ast);
     shell->ast = NULL;
