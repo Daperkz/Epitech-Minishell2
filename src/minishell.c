@@ -15,9 +15,9 @@ int minishell(shell_t *shell)
     while (1) {
         print_the_prompt(shell);
         shell->input_len = getline(&shell->input, &size, stdin);
-        if (exit_mysh(shell->input_len) == EXIT_SHUTDOWN)
+        if (is_myshtty(shell->input_len) == EXIT_SHUTDOWN)
             return (shell->last_errno);
-        retv = process_input(shell);
+        retv = ast_pipeline(shell);
         if (retv == EXIT_ERROR)
             return (retv);
         if (retv == EXIT_SHUTDOWN)

@@ -53,7 +53,7 @@ int init_shell(shell_t *shell, char **env);
 void print_the_prompt(shell_t *shell);
 void destroy_shell(shell_t *shell);
 
-int exit_mysh(ssize_t nread);
+int is_myshtty(ssize_t nread);
 
 // -_- command -_-
 
@@ -74,15 +74,10 @@ int exec_lsr(shell_t *shell, bnode_t *node);
 
 // -_- input -_-
 
-int process_input(shell_t *shell);
+int ast_pipeline(shell_t *shell);
 
 // -_- pipe -_-
 
 int exec_pipe(shell_t *shell, bnode_t *node);
-
-void pipe_child(shell_t *shell, char **pipe_segments, int i, int prev_fd);
-int execute_pipe(shell_t *shell, char **pipe_segments);
-int pipe_builtin(shell_t *shell, char **pipe_segments, int i, int prev_fd);
-int pipe_handler(shell_t *shell, char *command);
 
 #endif /* !SHELL_H_ */

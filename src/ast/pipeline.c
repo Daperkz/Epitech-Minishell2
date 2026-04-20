@@ -1,23 +1,13 @@
 /*
 ** EPITECH PROJECT, 2026
-** process_input.c
+** pipeline.c
 ** File description:
-** process_input
+** pipeline
 */
 
 #include "shell.h"
 
-int exit_mysh(ssize_t nread)
-{
-    if (nread == -1) {
-        if (isatty(STDIN_FD))
-            write(STDOUT_FD, "exit\n", 5);
-        return (EXIT_SHUTDOWN);
-    }
-    return (EXIT_SUCCESS);
-}
-
-int process_input(shell_t *shell)
+int ast_pipeline(shell_t *shell)
 {
     int retv = EXIT_FAILURE;
 

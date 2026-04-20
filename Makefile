@@ -24,7 +24,6 @@ SHELL_D	=	$(SRC_D)shell/
 FEATURES_D	=	$(SRC_D)features/
 BUILTINS_D	=	$(FEATURES_D)builtins/
 REDIRECTION_D	=	$(FEATURES_D)redirections/
-INPUTS_D	=	$(SRC_D)inputs/
 UTILS_D	=	$(SRC_D)utils/
 STRINGS_D	=	$(UTILS_D)strings/
 AST_D	=	$(SRC_D)ast/
@@ -55,10 +54,8 @@ REDIRECTION_F	=	error.c	\
 					lsr.c
 
 
-INPUTS_F	=	process_input.c	\
-
-
-UTILS_F	=	signal_handling.c	\
+UTILS_F	=	is_myshtty.c	\
+			signal_handling.c	\
 			get_env_var.c	\
 			get_path_array.c	\
 			refresh_path.c
@@ -70,7 +67,8 @@ STRINGS_F	=	find_command.c	\
 				my_strstr_unquoted.c
 
 AST_F	=	create.c	\
-			execute.c
+			execute.c	\
+			pipeline.c
 
 AST_DATA_F	=	create.c	\
 				destroy.c
